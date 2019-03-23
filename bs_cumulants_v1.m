@@ -1,4 +1,4 @@
-function [c1, c2, c4, w] = bs_cumulants_v1(u_bar, mu, T )
+function [c1, c2, c4, w] = bs_cumulants_v1(u_0, mu, T )
 
 %{
  
@@ -13,7 +13,7 @@ function [c1, c2, c4, w] = bs_cumulants_v1(u_bar, mu, T )
 
 
  Inputs : mu            - log price drift rate
-        : u_bar         - mean (long run) volatility
+        : u_0           - mean (long run) volatility
         : T             - time to maturity
 
 
@@ -25,8 +25,8 @@ Outputs : c1             -
 %}
 
 c1 = mu * T;
-c2 = u_bar * T;
+c2 = u_0 * T;
 c4 = 0;
 
 % Drift correction term (0 for the Heston Model)
-w = 0
+w = 0;

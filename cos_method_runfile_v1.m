@@ -37,15 +37,15 @@ mu   = r - q;                                   % Price Drift Rate
 [a_hest, b_hest]= cos_truncation_range_v2(c1,c2,0,12);
 
 % CGMY cumulants and integration bounds
-[c1, c2, c4, ~] = cgmy_cumulants_v2( u_bar, T, mu, C, G, M, Y);
+[c1, c2, c4, ~] = cgmy_cumulants_v2( u_0, T, mu, C, G, M, Y);
 [a_cgmy, b_cgmy]= cos_truncation_range_v2(c1,c2,c4,10);
 
 % VG cumulants and integration bounds
-[c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_bar, T, theta, eta, mu );
+[c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_0, T, theta, 1, mu );
 [a_vg, b_vg]    = cos_truncation_range_v2(c1,c2,c4,10);
 
 % BS cumulants and integration bounds
-[c1, c2, c4, ~] = bs_cumulants_v1(u_bar, mu, T );
+[c1, c2, c4, ~] = bs_cumulants_v1(u_0, mu, T );
 [a_bs, b_bs]    = cos_truncation_range_v2(c1,c2,c4,10);
 
 
@@ -60,7 +60,7 @@ x       = log(S0 ./ K);         % Vector of M log prices
 % Characteristic functions for the log stock price
 phi_hest     = heston_char_fn_v2(mu, lambda, u_bar, u_0, eta, rho, a_hest, b_hest, k, T);
 phi_cgmy     = cgmy_char_fn(mu, u_0, C, G, Y, M, a_cgmy, b_cgmy, k, T);
-phi_vg       = vg_char_fn(u_0, eta, theta, a_vg, b_vg, k, T);
+phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T);
 phi_bs       = bs_char_fn_v1(mu, u_0, a_bs, b_bs, k, T);
 
 
@@ -111,6 +111,9 @@ MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,2, 'Variance-Gamma Pdf');
 % CGMY Plot
 % CGMY - Parameters from CGMY ( 2003 )
 MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,3, 'CGMY Pdf');
+
+
+
 
 
 %% ========== PRIVATE FUNCTIONS ==========
