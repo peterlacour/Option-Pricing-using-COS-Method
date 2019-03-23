@@ -64,6 +64,7 @@ phi_vg       = vg_char_fn(u_0, eta, theta, a_vg, b_vg, k, T);
 phi_bs       = bs_char_fn_v1(mu, u_0, a_bs, b_bs, k, T);
 
 
+% FFT-COS Prices
 [C_COS_hest, P_COS_hest] = cos_option_price_v1(a_hest, b_hest, k, K, phi_hest, x, mu, T);
 [C_COS_cgmy, P_COS_cgmy] = cos_option_price_v1(a_cgmy, b_cgmy, k, K, phi_cgmy, x, mu, T);
 [C_COS_vg,   P_COS_vg]   = cos_option_price_v1(a_vg,   b_vg,   k, K, phi_vg,   x, mu, T);
@@ -93,3 +94,48 @@ subplot(2,1,2)
 plot(K,P_COS_hest-P_BS'), grid on;
 
 
+%% SETUP
+Npoints = 5000;
+N = 5000;                         % default value 25, try 100,500,5000
+
+% Heston Plot
+% Heston truncation bounds
+figure
+MakePdfPlot2(phi_hest,a_hest,b_hest,k,mu,u_0,N,1, 'Heston Pdf');
+
+
+% Variance Gamma Plot
+MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,2, 'Variance-Gamma Pdf');
+
+
+% CGMY Plot
+% CGMY - Parameters from CGMY ( 2003 )
+MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,3, 'CGMY Pdf');
+
+
+%% ========== PRIVATE FUNCTIONS ==========
+function MakePdfPlot2(cf,a,b,k,mu,u_0,N,plotpos,name)
+bma = b-a;
+x = linspace(a,b,N);
+true=normpdf(x,mu, sqrt(u_0) );
+
+Fk = 2/bma * real( cf.*exp(-1i*k*a*pi/bma)   );
+Fk(1)=0.5*Fk(1);
+
+for l=1:length(x)
+    pdf(l)=sum(Fk.*cos (k*pi*(x(l)-a)/bma) );
+end
+
+subplot(2,3,plotpos)
+hold on
+plot(x,pdf, 'DisplayName', name), grid on;
+title(name)
+plot(x, true, 'DisplayName', 'Normal Pdf')
+legend
+hold off
+
+subplot(2,3,plotpos+3)
+plot(x,pdf(:)-true(:)), grid on;
+title(strcat(name, " - Normal Pdf"))
+
+end
