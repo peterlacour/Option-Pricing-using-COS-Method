@@ -41,7 +41,7 @@ mu   = r - q;                                   % Price Drift Rate
 [a_cgmy, b_cgmy]= cos_truncation_range_v2(c1,c2,c4,10);
 
 % VG cumulants and integration bounds
-[c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_0, T, theta, 1, mu );
+[c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_0, T, theta, mu );
 [a_vg, b_vg]    = cos_truncation_range_v2(c1,c2,c4,10);
 
 % BS cumulants and integration bounds
@@ -78,20 +78,27 @@ phi_bs       = bs_char_fn_v1(mu, u_0, a_bs, b_bs, k, T);
 % Based on code by Peter.Gruber@unisg.ch, and Paul.Soderlind@unisg.ch
 [C_BS, P_BS, ~, ~] = black_scholes_price(S0,K,r,T,sqrt(u_0),q);
 
-subplot(2,1,1)
+subplot(2,3,1)
 plot(K,C_COS_hest,'r'), grid on, hold on;
-plot(K,C_BS,'--k'), hold off;
+plot(K,C_BS,'--k'), 
 
-subplot(2,1,2)
-plot(K,C_COS_hest-C_BS'), grid on;
+subplot(2,3,4)
+plot(K,C_COS_hest-C_BS'), 
 
+subplot(2,3,2)
+plot(K,C_COS_vg,'r'), grid on, hold on;
+plot(K,C_BS,'--k'), 
 
-subplot(2,1,1)
-plot(K,P_COS_hest,'r'), grid on, hold on;
-plot(K,P_BS,'--k'), hold off;
+subplot(2,3,5)
+plot(K,C_COS_vg-C_BS'), 
 
-subplot(2,1,2)
-plot(K,P_COS_hest-P_BS'), grid on;
+subplot(2,3,3)
+plot(K,C_COS_cgmy,'r'), 
+plot(K,C_BS,'--k'), 
+
+subplot(2,3,6)
+plot(K,C_COS_cgmy-C_BS'), 
+hold off;
 
 
 %% SETUP
@@ -111,6 +118,44 @@ MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,2, 'Variance-Gamma Pdf');
 % CGMY Plot
 % CGMY - Parameters from CGMY ( 2003 )
 MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,3, 'CGMY Pdf');
+
+
+% Call Plots
+% Heston
+subplot(2,3,1)
+plot(K,C_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
+plot(K,C_BS,'--k', 'DisplayName', 'True BS'),
+title('Heston Model')
+legend
+axis([70 130 0.0 32])
+subplot(2,3,4)
+plot(K,C_COS_hest-C_BS'), grid on, hold on;
+axis([70 130 -0.5 2.5])
+% Variance Gamma
+subplot(2,3,2)
+plot(K,C_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
+plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
+title('Variance Gamma Model')
+legend
+axis([70 130 0.0 32])
+subplot(2,3,5)
+plot(K,C_COS_vg-C_BS'), grid on, hold on;
+axis([70 130 -0.5 2.5])
+% CGMY
+subplot(2,3,3)
+plot(K,C_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
+plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
+title('CGMY Model')
+legend
+axis([70 130 0.0 32])
+subplot(2,3,6)
+plot(K,C_COS_cgmy-C_BS'), grid on, hold off;
+axis([70 130 -0.5 2.5])
+
+
+% Mean Squared Errors
+
+
 
 
 
