@@ -119,7 +119,7 @@ MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,2, 'Variance-Gamma Pdf');
 % CGMY - Parameters from CGMY ( 2003 )
 MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,3, 'CGMY Pdf');
 
-
+%{
 % Call Plots
 % Heston
 subplot(2,3,1)
@@ -150,8 +150,42 @@ legend
 axis([70 130 0.0 32])
 subplot(2,3,6)
 plot(K,C_COS_cgmy-C_BS'), grid on, hold off;
-axis([70 130 -0.5 2.5])
+axis([70 130 -0.5 2.5]);
 
+
+
+% Put Plots
+% Heston
+subplot(2,3,1)
+plot(K,P_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
+plot(K,P_BS,'--k', 'DisplayName', 'True BS'),
+title('Heston Model')
+legend
+axis([70 130 0.0 32])
+subplot(2,3,4)
+plot(K,P_COS_hest-P_BS'), grid on, hold on;
+axis([70 130 -0.5 2.5])
+% Variance Gamma
+subplot(2,3,2)
+plot(K,P_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
+plot(K,P_BS,'--k', 'DisplayName', 'True BS'), 
+title('Variance Gamma Model')
+legend
+axis([70 130 0.0 32])
+subplot(2,3,5)
+plot(K,P_COS_vg-P_BS'), grid on, hold on;
+axis([70 130 -0.5 2.5])
+% CGMY
+subplot(2,3,3)
+plot(K,P_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
+plot(K,P_BS,'--k', 'DisplayName', 'True BS'), 
+title('CGMY Model')
+legend
+axis([70 130 0.0 32])
+subplot(2,3,6)
+plot(K,P_COS_cgmy-P_BS'), grid on, hold off;
+axis([70 130 -0.5 2.5])
+%}
 
 % Mean Squared Errors
 
@@ -180,10 +214,13 @@ plot(x,pdf, 'DisplayName', name), grid on;
 title(name)
 plot(x, true, 'DisplayName', 'Normal Pdf')
 legend
+axis([-1.5 1.5 0 4.5])
 hold off
 
 subplot(2,3,plotpos+3)
 plot(x,pdf(:)-true(:)), grid on;
 title(strcat(name, " - Normal Pdf"))
+axis([-1.5 1.5 -1.5 2.5])
+
 
 end
