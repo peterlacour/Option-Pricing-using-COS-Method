@@ -3,6 +3,8 @@ Advanced Numerical Methods and Data Analysis - FS19-8,780
 <br>
 University of St. Gallen, 24.03.2019
 <br>
+<a href="https://github.com/peterlacour/Option-Pricing-using-COS-Method">Github Repository</a>
+
 </div>
 
 -------------
