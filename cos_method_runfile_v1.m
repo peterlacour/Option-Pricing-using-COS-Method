@@ -2,6 +2,7 @@
 
 clear, clc;
 
+addpath("./Functions")
 
 %% Import Data
 
