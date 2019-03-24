@@ -83,7 +83,7 @@ x       = log(S0 ./ K);         % Vector of M log prices
 % Characteristic functions for the log stock price
 phi_hest     = heston_char_fn_v2(mu, lambda, u_bar, u_0, eta, rho, a_hest, b_hest, k, T);
 phi_cgmy     = cgmy_char_fn(mu, u_0, C, G, Y, M, a_cgmy, b_cgmy, k, T);
-phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T, v);
+phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T, v, S0, mu);
 phi_bs       = bs_char_fn_v1(mu, u_0, a_bs, b_bs, k, T);
 
 
