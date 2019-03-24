@@ -40,23 +40,20 @@ University of St. Gallen, 24.03.2019
 	* <a href="#BB2">Heston Model</a>
 	* <a href="#BB3">Variance Gamma Model</a>
 	* <a href="#BB4">CGMY Model</a>
-	* <a href="#BB5">Other Models </a>
 4. <a href="#C2">Distributional Characteristics of the different Models</a>
-5. <a href="#D2">Option Pricing with the Cos-FFT Method</a>
+5. <a href="#D2">Option Pricing with the COS-FFT Method</a>
 6. <a href="#E2">Concluding Remarks</a>
 7. <a href="#F2"> References </a>
 
 
 ## <div id="2"> <a href="#0">Introduction  </a> </div>
+In the following, we compute prices for one day of European put and call options on the S&P 500 Index through the COS method, pioneered by Fang and Oosterle (2008). For this study, we consider options expiring on the March 20, 2020, whose maturity is close to one year at the time of writing, March 24, 2019. 
+
+We compare estimated prices under four underlying diffusion assumptions, namely the Black-Scholes, Heston, Variance Gamma and CGMY models. In doing so, we employ calibrated parameters from some of the original papers. Consequently, we cannot make statements about the accuracy of the COS method with respect to other numerical option pricing techniques at this stage, since realised option prices should instead reflect current market parameters. We leave this analysis to successive work, where such parameters will be calibrated through numerical optimization. We thus take the Black-Scholes model, for which an analytical pricing formula is available, as a reference framework. We then comment on whether COS prices capture the intended deviation of other models from the BS setup, despite truncation of the domain and finite precision. We find that, in general, this seems to be the case.
 
 
 
-
-
-
-
-
-## <div id="A2"> <a href="#0">Description of the Cos-FFT Method</a> </div>
+## <div id="A2"> <a href="#0">Description of the COS-FFT Method</a> </div>
 
 The COS mehod (Fang and Oosterlee, 2008) is a novel option pricing method based on a Fourier-cosine expansion of the density function. The algorithm can be applied to european plain vanilla options and to some options with early exercise rights. Cosine expansions offer an alternative to the industry-standard Fast Fourier Transform (FFT) approach developed in Carr and Madan (1999). Both  FFT and the COS method exploit knowledge of the characteristic function of the underlying process, which is often given, even when the density is unknown. However, the COS method can be significantly faster, while also circumventing some of the issues with the FFT approach, which are briefly highlighted in next section. FFT-based methods' for option pricing typically exhibit second order accuracy with computational complexity <img src="https://latex.codecogs.com/gif.latex?\inline&space;O(N&space;\log_2(N))" title="O(N \log_2(N))" /> (Fang and Oosterlee, 2008). The COS method instead can achieve exponential convergence, while keeping computational complexity linear. 
 
@@ -66,7 +63,12 @@ The COS mehod (Fang and Oosterlee, 2008) is a novel option pricing method based 
 
 Since the characteristic function is equivalent to the Fourier transform of the density function in the risk-neutral domain the pricing problem can be solved in Fourier domain. FFT then relies on numerical integration through quadrature rules to solve the inverse Fourier integral and tranform the solution back to the time domain. The Fourier transform is taken with respect to the log strike price <img src="https://latex.codecogs.com/gif.latex?\inline&space;k&space;=&space;ln(K)" title="k = ln(K)" />, with <img src="https://latex.codecogs.com/gif.latex?\inline&space;x&space;=&space;ln(S_T)" title="x = ln(S_T)" />. The price for a European call option can then be expressed as:
 
+<div class="latex-wrap">
+<div class="latex-eq-body">
 <img src="https://latex.codecogs.com/gif.latex?C_T(k)&space;=&space;e^{-rT}&space;E^{Q}[(S_T-K)^&plus;]=&space;e^{-rT}&space;\int^\infty_k&space;(e^x&space;-&space;e^k)q(x)" title="C_T(k) = e^{-rT} E^{Q}[(S_T-K)^+]= e^{-rT} \int^\infty_k (e^x - e^k)q(x)" />
+</div>
+<div class="latex-eq-num"> (1) </div>
+</div>
 
 Where <img src="https://latex.codecogs.com/gif.latex?\inline&space;q(\cdot)" title="q(\cdot)" /> denotes the risk-neutral density function. When <img src="https://latex.codecogs.com/gif.latex?\inline&space;k" title="k" /> goes to <img src="https://latex.codecogs.com/gif.latex?\inline&space;-\infty" title="-\infty" />, the call price converges to <img src="https://latex.codecogs.com/gif.latex?\inline&space; S_0" title="S_0" />. As a result, the call pricing function is not square integrable, and its Fourier integral is not well defined. Since FFT evaluates the characteristic function at <img src="https://latex.codecogs.com/gif.latex?\inline&space;0" title="0" />, the introduction of a damping parameter <img src="https://latex.codecogs.com/gif.latex?\inline&space;e^{\alpha k}" title="e^{\alpha k}" /> is necessary to in order to shift the singularity away from the origin. Lewis (2001) and Lee (2004) show how this is equivalent to evaluating a contour integral in the complex plane, where the pole is shifted away from the real line on the immaginary axis. 
 
@@ -74,42 +76,73 @@ However, the Carr-Madan approach suffers from some disadvantages. First, quadrat
 
 Another issue with the FFT method is that the number of evaluation arguments $N$ must necessarily be a power of 2, which can be undesirable. Further, the grid size for the numerical integration is typically tied to the spacing between strike prices by the Nyquist relation:
 
+<div class="latex-wrap">
+<div class="latex-eq-body">
 <img src="https://latex.codecogs.com/gif.latex?\Delta&space;x&space;\cdot&space;\Delta&space;\omega&space;=&space;\frac{2&space;\pi}{N}" title="\Delta x \cdot \Delta \omega = \frac{2 \pi}{N}" />
+</div>
+<div class="latex-eq-num"> (2) </div>
+</div>
+
 
 where <img src="https://latex.codecogs.com/gif.latex?\inline&space;x" title="x" /> denotes the log price and <img src="https://latex.codecogs.com/gif.latex?\inline&space;w" title="w" /> denotes the argument of the characteristic function. Choosing a fine grid to improve integration accuracy increases the spacing between strike prices at which option prices are computed. Strikes are then pushed deeper in- and out-of-the-money, leading to a lower number of option prices laying in the relevant region.
 
 
-<div class="latex-wrap">
-<div class="latex-eq-body">
-	
-</div>
-<div class="latex-eq-num"> (1) </div>
-</div>
+
 
 
 ### <div id="BB1"> COS Method </div>
 
 The COS method does not rely on numerical integration to price contingent claims. Rather, it replaces the entire density with its cosine series expansion. The cosine expansion is defined for functions with support on <img src="https://latex.codecogs.com/gif.latex?\inline&space;[0,\pi]" title="[0,\pi]" />. Through change of variables, it can be generalised to functions with support on a generic finite interval <img src="https://latex.codecogs.com/gif.latex?\inline&space;[a,b]" title="[a,b]" />. 
 
+<div class="latex-wrap">
+<div class="latex-eq-body">
 <img src="https://latex.codecogs.com/gif.latex?\sum_{k=0}^{&plus;\infty}'&space;A_k&space;\cdot&space;\cos&space;\Big(k&space;\pi&space;(x-a)/(b-a)&space;\Big)" title="\sum_{k=0}^{+\infty}' A_k \cdot \cos \Big(k \pi (x-a)/(b-a) \Big)" />
+</div>
+<div class="latex-eq-num"> (3) </div>
+</div>
 
+<div class="latex-wrap">
+<div class="latex-eq-body">
 <img src="https://latex.codecogs.com/gif.latex?A_k&space;=&space;\frac{2}{b-a}&space;\int^{b}_{a}&space;f(x)&space;\cos\Big(k&space;\pi&space;\frac{x-a}{b-a}\Big)dx" title="A_k = \frac{2}{b-a} \int^{b}_{a} f(x) \cos\Big(k \pi \frac{x-a}{b-a}\Big)dx" />
+</div>
+<div class="latex-eq-num"> (4) </div>
+</div>
 
 Where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\sum&space;'" title="\sum '" /> indicates that the first summand is divided by 2. The density inside the equation for the <img src="https://latex.codecogs.com/gif.latex?\inline&space;A_k" title="A_k" /> terms can be substituted through an approximation of the characteristic function on the <img src="https://latex.codecogs.com/gif.latex?\inline&space;(a,b)" title="(a,b)" /> interval, which introduces a first error component, <i>i.e.</i> <img src="https://latex.codecogs.com/gif.latex?\inline&space;\varphi&space;\approx&space;\varphi_1&space;=&space;\int^b_a&space;e^{iux}&space;\cdot&space;f(x)&space;dx" title="\varphi \approx \varphi_1 = \int^b_a e^{iux} \cdot f(x) dx" />. This gives 
 
+<div class="latex-wrap">
+<div class="latex-eq-body">
 <img src="https://latex.codecogs.com/gif.latex?A_k&space;=&space;\frac{2}{b-a}&space;Re\Big\{\varphi_1\&space;\Big(&space;\frac{k&space;\pi}{b-a}\Big)&space;\cdot&space;\exp\Big(-i&space;\frac{k&space;a&space;\pi}{b-a}&space;\Big)&space;\Big\}" title="A_k = \frac{2}{b-a} Re\Big\{\varphi_1\ \Big( \frac{k \pi}{b-a}\Big) \cdot \exp\Big(-i \frac{k a \pi}{b-a} \Big) \Big\}" />
+</div>
+<div class="latex-eq-num"> (5) </div>
+</div>
 
 Which can be approximated by:
 
+<div class="latex-wrap">
+<div class="latex-eq-body">
 <img src="https://latex.codecogs.com/gif.latex?F_k&space;=&space;\frac{2}{b-a}&space;Re\Big\{\varphi&space;\Big(&space;\frac{k&space;\pi}{b-a}\Big)&space;\cdot&space;\exp\Big(-i&space;\frac{k&space;a&space;\pi}{b-a}&space;\Big)&space;\Big\}" title="F_k = \frac{2}{b-a} Re\Big\{\varphi \Big( \frac{k \pi}{b-a}\Big) \cdot \exp\Big(-i \frac{k a \pi}{b-a} \Big) \Big\}" />
+</div>
+<div class="latex-eq-num"> (6) </div>
+</div>
 
 We then substitute <img src="https://latex.codecogs.com/gif.latex?\inline&space;F_k" title="F_k" /> for <img src="https://latex.codecogs.com/gif.latex?\inline&space;A_k" title="A_k" />in the infinite series and truncate the sum, which introduces a second source of approximation error. The price of a contingent claim, which is given by an expectation in terms of the risk neutral density, can then be computed. In the case of a call option the equation reads:
 
-$$ C(x,T) = e^{- r \tau } \sum^{N-1}_{k=0} ' Re\Big\{\varphi \Big( \frac{k \pi}{b-a}\Big) \cdot \exp\Big(-i \frac{k a \pi}{b-a} \Big) \Big\} V_k^{call}$$ 
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?C(x,T)&space;=&space;e^{-&space;r&space;\tau&space;}&space;\sum^{N-1}_{k=0}&space;'&space;Re\Big\{\varphi&space;\Big(&space;k&space;\pi&space;/&space;(b-a)&space;\Big)&space;\cdot&space;\exp\Big(-i&space;k&space;a&space;\pi/(b-a)&space;\Big)&space;\Big\}&space;V_k^{call}" title="C(x,T) = e^{- r \tau } \sum^{N-1}_{k=0} ' Re\Big\{\varphi \Big( k \pi / (b-a) \Big) \cdot \exp\Big(-i k a \pi/(b-a) \Big) \Big\} V_k^{call}" />
+</div>
+<div class="latex-eq-num"> (7) </div>
+</div>
 
 where <img src="https://latex.codecogs.com/gif.latex?\inline&space;V_k" title="V_k" /> call is the integral resulting from the inversion of summation and integral sign, which can be computed analytically. In particular:
 
+<div class="latex-wrap">
+<div class="latex-eq-body">
 <img src="https://latex.codecogs.com/gif.latex?V_k^{call}&space;=&space;\frac{2}{b-a}&space;K&space;(\chi_k(0,b)-\psi_k(0,b))" title="V_k^{call} = \frac{2}{b-a} K (\chi_k(0,b)-\psi_k(0,b))" />
+</div>
+<div class="latex-eq-num"> (8) </div>
+</div>
 
 Analytic forms for <img src="https://latex.codecogs.com/gif.latex?\inline&space;\chi_k" title="\chi_k" /> and <img src="https://latex.codecogs.com/gif.latex?\inline&space;\psi_k" title="\psi_k" /> are given in Fang and Oosterlee (2008).
 
@@ -175,7 +208,7 @@ phi_bs = exp(( -0.5 * u_0 ) * 1i * T .* omega - 0.5 * u_0 * T * omega .^2);
 
 The Heston model incorporates a stochastic volatility term and can be described by this system of stochastic differential equations:
 
-<img src="https://latex.codecogs.com/gif.latex?\inline&space;\begin{align}&space;ds_t&space;&&space;=&space;(&space;\mu&space;-&space;0.5&space;u_t&space;)&space;dt&space;&plus;&space;\sqrt{u_t}&space;\&space;\&space;dW_{1t}&space;\\&space;du_t&space;&&space;=&space;\lambda&space;(&space;\bar{u}&space;-&space;u_t&space;)&space;dt&space;&plus;&space;\eta&space;\sqrt{u_t}&space;\&space;\&space;dW_{2t}&space;\end{align}" title="\begin{align} ds_t & = ( \mu - 0.5 u_t ) dt + \sqrt{u_t} \ \ dW_{1t} \notag \\ du_t & = \lambda ( \bar{u} - u_t ) dt + \eta \sqrt{u_t} \ \ dW_{2t} \notag \end{align}" />
+<img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;ds_t&space;&&space;=&space;(\mu&space;-0.5u_t)dt&space;&plus;&space;sqrt{u_t}&space;\&space;\&space;dW_{1t}&space;\notag&space;\\&space;du_t&space;&=&space;\lambda(\bar{u}&space;-u_t)dt&space;&plus;&space;\eta&space;\sqrt{u_t}&space;\&space;\&space;dW_{2t}&space;\notag&space;\end{align}" title="\begin{align} ds_t & = (\mu -0.5u_t)dt + sqrt{u_t} \ \ dW_{1t} \notag \\ du_t &= \lambda(\bar{u} -u_t)dt + \eta \sqrt{u_t} \ \ dW_{2t} \notag \end{align}" />
 
 where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\mu" title="\mu" /> is the drift term <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_t" title="u_t" /> is the stochastic variance, <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_0" title="u_0" /> is the initial volatility, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\bar{u}" title="\bar{u}" /> is the long term variance, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\lambda" title="\lambda" /> is the speed of mean reversion of the stochastic volatility, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\eta" title="\eta" /> is the volatility of the volatility and <img src="https://latex.codecogs.com/gif.latex?\inline&space;W_{1t}" title="W_{1t}" /> and <img src="https://latex.codecogs.com/gif.latex?\inline&space;W_{2t}" title="W_{2t}" /> are two correlated Wiener processes.
 
@@ -363,11 +396,6 @@ phi_cgmy = exp( 1i * omega * ( mu ) * T - 0.5 * omega.^2 * u_0 * T) .* ...
 ```
 </details>
 </p>
-
-
-### <div id="BB5"> Other Models </div>
-
-
 
 
 <div align="right"><a href="#0">Back to top</a> </div>
