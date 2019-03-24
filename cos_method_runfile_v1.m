@@ -68,6 +68,8 @@ mu         = r - q;                                   % Price Drift Rate
 
 
 %% COS-FFT Truncation Bounds
+% Start timer
+tic
 
 % Heston cumulants and integration bounds
 [c1, c2, ~]     = heston_cumulants_v1(mu, lambda, u_bar, u_0, eta, rho, T);
@@ -88,10 +90,10 @@ mu         = r - q;                                   % Price Drift Rate
 
 %% COS - FFT Parameters
 
-N       = 500;                 % Number of points to evaluate
-k       = 0:(N - 1);            % Vector of N evaluation intervals
-K       = strikes';             % Vector of M strike prices to evaluate
-x       = log(S0 ./ K);         % Vector of M log prices
+N             = 500;                 % Number of points to evaluate
+k             = 0:(N - 1);            % Vector of N evaluation intervals
+K             = strikes';             % Vector of M strike prices to evaluate
+x             = log(S0 ./ K);         % Vector of M log prices
 
 
 % Characteristic functions for the log stock price
@@ -106,7 +108,8 @@ phi_bs       = bs_char_fn_v1(u_0, a_bs, b_bs, k, T);
 [C_COS_cgmy, P_COS_cgmy] = cos_option_price_v1(a_cgmy, b_cgmy, k, K, phi_cgmy, x, mu, T);
 [C_COS_vg,   P_COS_vg]   = cos_option_price_v1(a_vg,   b_vg,   k, K, phi_vg,   x, mu, T);
 [C_COS_bs,   P_COS_bs]   = cos_option_price_v1(a_bs,   b_bs,   k, K, phi_bs,   x, mu, T);
-
+% Stop timer
+toc
 
 % Black and Scholes Analytical Option Prices
 % Based on code by Peter.Gruber@unisg.ch, and Paul.Soderlind@unisg.ch
@@ -182,48 +185,6 @@ subplot(2,4,8)
 plot(K,(C_COS_cgmy-C_BS')), grid on, hold off;
 title("Diff. between CGMY" + newline + "and Analytical Black-Scholes")
 axis([min(strikes) max(strikes) -5.0 70.0])
-
-%{
-% Put Plots
-% BS
-subplot(2,4,1)
-plot(K,P_COS_bs,'r', 'DisplayName', 'BS'), grid on, hold on;
-plot(K,P_BS,'--k', 'DisplayName', 'Analytical BS'),
-title('Black-Scholes Model')
-legend
-axis([min(strikes) max(strikes) 0.0 2000])
-subplot(2,4,5)
-plot(K,(P_COS_bs-P_BS')), grid on, hold on;
-title('Black-Scholes - Analytical Black-Scholes')
-%axis([min(strikes) max(strikes) -0.05 0.05])
-% Heston
-subplot(2,4,2)
-plot(K,P_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
-plot(K,P_BS,'--k', 'DisplayName', 'True BS'),
-title('Heston Model')
-legend
-axis([min(strikes) max(strikes) 0.0 2000])
-subplot(2,4,6)
-plot(K,(P_COS_hest-P_BS')), grid on, hold on;
-% Variance Gamma
-subplot(2,4,3)
-plot(K,P_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
-plot(K,P_BS,'--k', 'DisplayName', 'True BS'), 
-title('Variance Gamma Model')
-legend
-axis([min(strikes) max(strikes) 0.0 2000])
-subplot(2,4,7)
-plot(K,(P_COS_vg-P_BS')), grid on, hold on;
-% CGMY
-subplot(2,4,4)
-plot(K,P_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
-plot(K,P_BS,'--k', 'DisplayName', 'True BS'), 
-title('CGMY Model')
-legend
-%axis([min(strikes) max(strikes) 0.0 2000])
-subplot(2,4,8)
-plot(K,(P_COS_cgmy-P_BS')), grid on, hold off;
-%}
 
 
 

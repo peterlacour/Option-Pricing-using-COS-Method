@@ -44,7 +44,7 @@ chain   <- getOptionChain("^GSPC", Exp = exp_date)
 ## Strike Prices
 chain   <- rbindlist(chain)
 K       <- data.frame(K = sort(unique(chain$Strike)))
-optionPrices <- data.frame(K = unique(chain$Bid))
+optionPrices <- data.frame(K = unique(chain$Last))
 
 
 ## Time to maturity
