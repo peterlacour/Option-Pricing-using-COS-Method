@@ -83,15 +83,11 @@ The COS method does not rely on numerical integration to price contingent claims
 
 Where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\sum&space;'" title="\sum '" /> indicates that the first summand is divided by 2. The density inside the equation for the <img src="https://latex.codecogs.com/gif.latex?\inline&space;A_k" title="A_k" /> terms can be substituted through an approximation of the characteristic function on the <img src="https://latex.codecogs.com/gif.latex?\inline&space;(a,b)" title="(a,b)" /> interval, which introduces a first error component, <i>i.e.</i> <img src="https://latex.codecogs.com/gif.latex?\inline&space;\varphi&space;\approx&space;\varphi_1&space;=&space;\int^b_a&space;e^{iux}&space;\cdot&space;f(x)&space;dx" title="\varphi \approx \varphi_1 = \int^b_a e^{iux} \cdot f(x) dx" />. This gives 
 
-
 <img src="https://latex.codecogs.com/gif.latex?A_k&space;=&space;\frac{2}{b-a}&space;Re\Big\{\varphi_1\&space;\Big(&space;\frac{k&space;\pi}{b-a}\Big)&space;\cdot&space;\exp\Big(-i&space;\frac{k&space;a&space;\pi}{b-a}&space;\Big)&space;\Big\}" title="A_k = \frac{2}{b-a} Re\Big\{\varphi_1\ \Big( \frac{k \pi}{b-a}\Big) \cdot \exp\Big(-i \frac{k a \pi}{b-a} \Big) \Big\}" />
-
 
 Which can be approximated by:
 
-
 <img src="https://latex.codecogs.com/gif.latex?F_k&space;=&space;\frac{2}{b-a}&space;Re\Big\{\varphi&space;\Big(&space;\frac{k&space;\pi}{b-a}\Big)&space;\cdot&space;\exp\Big(-i&space;\frac{k&space;a&space;\pi}{b-a}&space;\Big)&space;\Big\}" title="F_k = \frac{2}{b-a} Re\Big\{\varphi \Big( \frac{k \pi}{b-a}\Big) \cdot \exp\Big(-i \frac{k a \pi}{b-a} \Big) \Big\}" />
-
 
 We then substitute <img src="https://latex.codecogs.com/gif.latex?\inline&space;F_k" title="F_k" /> for <img src="https://latex.codecogs.com/gif.latex?\inline&space;A_k" title="A_k" />in the infinite series and truncate the sum, which introduces a second source of approximation error. The price of a contingent claim, which is given by an expectation in terms of the risk neutral density, can then be computed. In the case of a call option the equation reads:
 
@@ -310,7 +306,8 @@ The characteristic function of the CGMY model can be written as:
 
 <img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{CGMY}&space;&&space;=&space;exp\left(&space;i&space;\omega&space;\mu&space;\Delta t&space;-&space;0.5&space;\omega^2&space;u_t&space;\Delta t&space;\right)&space;\cdot&space;exp\left(&space;\Delta t&space;C&space;\Gamma(-Y)\left[&space;(M&space;-&space;i&space;\omega&space;)^Y&space;-M^Y&space;&plus;&space;(G&plus;i&space;\omega)^Y&space;-&space;G^Y&space;\right]&space;\right&space;)&space;\notag&space;\end{align}" title="\begin{align} \varphi_{CGMY} & = exp\left( i \omega \mu \Delta t - 0.5 \omega^2 \sigma^2 \Delta t \right) \cdot exp\left( \Delta t C \Gamma(-Y)\left[ (M - i \omega )^Y -M^Y + (G+i \omega)^Y - G^Y \right] \right ) \notag \end{align}" />
 
-where C can be described as a measure of the overall level of activity of the process, G controls the exponential decay on the right of the process and M controls the exponential decay on the left. For example, if G < M, the left tail of the distribution would be heavierthan the right tail. The parameter Y icharacterizes the fine structure of the jumps of the CGMY process and a more in depth description of it can be found in Carr et al. (2002).
+where C can be described as a measure of the overall level of activity of the process, G controls the exponential decay on the right of the process and M controls the exponential decay on the left. For example, if G < M, the left tail of the distribution would be heavier
+than the right tail. The parameter Y icharacterizes the fine structure of the jumps of the CGMY process and a more in depth description of it can be found in Carr et al. (2002).
 
 
 
