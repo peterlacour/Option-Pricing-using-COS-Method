@@ -44,17 +44,18 @@ chain   <- getOptionChain("^GSPC", Exp = exp_date)
 ## Strike Prices
 chain   <- rbindlist(chain)
 K       <- data.frame(K = sort(unique(chain$Strike)))
+optionPrices <- data.frame(K = unique(chain$Bid))
 
 
 ## Time to maturity
-Tm <- as.numeric(exp_date - pull_date) / 252
+Tm <- as.numeric(exp_date - pull_date) / 360
 
 # ================================ Fetch Div Yield and Risk Free-Rate ================================
 
 
 ## Download risk free rate from FRED (10-Year Treasury Constant Maturity Rate - Data in bps)
-getSymbols("DGS10", src = "FRED", warnings = FALSE, verbose = FALSE)
-rf <- as.numeric(tail(DGS10, 1)) / (252)
+getSymbols("TB3MS", src = "FRED", warnings = FALSE, verbose = FALSE)
+rf <- as.numeric(tail(TB3MS, 1)) / (100)
 
 ## Dividend Yield
 div_yield <- div_yield_extraction("http://www.multpl.com/s-p-500-dividend-yield/table")
@@ -64,4 +65,5 @@ params <- data.frame(S0 = stock_price, r = rf, q = div_yield, "T" = Tm)
 
 ## Write to csv
 fwrite(K,      file = "strike_prices.csv")
-fwrite(params, file = "params.csv"       )   
+fwrite(params, file = "params.csv"       )
+fwrite(optionPrices, file = "option_prices.csv")  

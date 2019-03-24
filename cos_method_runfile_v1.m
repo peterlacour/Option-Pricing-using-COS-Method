@@ -7,9 +7,13 @@ clear, clc;
 
 parameters = readtable("params.csv");
 strikes    = readtable("strike_prices.csv");
+optionBids = readtable("option_prices.csv");
+
 
 parameters = table2array(parameters(1,:));
 strikes    = table2array(strikes(:,1));
+optionBids = table2array(optionBids(:,1));
+
 %% Model Parameters
 
 % Heston Model Parameters [defaults from Fang and Oosterlee (2008)]
@@ -44,8 +48,8 @@ mu   = r - q;                                   % Price Drift Rate
 
 % Option / Underlying / Market Parameters
 S0   = parameters(1);                           % Initial Underlying Price
-r    = parameters(2);                                       % Risk-free Rate
-q    = parameters(3);                                       % Dividend Yield
+r    = parameters(2);                                  % Risk-free Rate
+q    = parameters(3);                              % Dividend Yield
 T    = parameters(4);                           % Time to Maturity
 mu   = r - q;                                   % Price Drift Rate
 
@@ -55,19 +59,19 @@ mu   = r - q;                                   % Price Drift Rate
 
 % Heston cumulants and integration bounds
 [c1, c2, ~]     = heston_cumulants_v1(mu, lambda, u_bar, u_0, eta, rho, T);
-[a_hest, b_hest]= cos_truncation_range_v2(c1,c2,0,100);
+[a_hest, b_hest]= cos_truncation_range_v2(c1,c2,0,12);
 
 % CGMY cumulants and integration bounds
 [c1, c2, c4, ~] = cgmy_cumulants_v2( u_0, T, mu, C, G, M, Y);
-[a_cgmy, b_cgmy]= cos_truncation_range_v2(c1,c2,c4,100);
+[a_cgmy, b_cgmy]= cos_truncation_range_v2(c1,c2,c4,10);
 
 % VG cumulants and integration bounds
 [c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_0, T, theta, mu, v );
-[a_vg, b_vg]    = cos_truncation_range_v2(c1,c2,c4,100);
+[a_vg, b_vg]    = cos_truncation_range_v2(c1,c2,c4,10);
 
 % BS cumulants and integration bounds
 [c1, c2, c4, ~] = bs_cumulants_v1(u_0, mu, T );
-[a_bs, b_bs]    = cos_truncation_range_v2(c1,c2,c4,100);
+[a_bs, b_bs]    = cos_truncation_range_v2(c1,c2,c4,10);
 
 
 %% COS - FFT Parameters
@@ -75,7 +79,7 @@ mu   = r - q;                                   % Price Drift Rate
 N       = 500;                 % Number of points to evaluate
 k       = 0:(N - 1);            % Vector of N evaluation intervals
 K       = strikes';             % Vector of M strike prices to evaluate
-% K       = 70:130;
+%K       = 70:130;
 x       = log(S0 ./ K);         % Vector of M log prices
 
 
@@ -83,8 +87,8 @@ x       = log(S0 ./ K);         % Vector of M log prices
 % Characteristic functions for the log stock price
 phi_hest     = heston_char_fn_v2(mu, lambda, u_bar, u_0, eta, rho, a_hest, b_hest, k, T);
 phi_cgmy     = cgmy_char_fn(mu, u_0, C, G, Y, M, a_cgmy, b_cgmy, k, T);
-phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T, v, S0, mu);
-phi_bs       = bs_char_fn_v1(mu, u_0, a_bs, b_bs, k, T);
+phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T, v, mu);
+phi_bs       = bs_char_fn_v1(u_0, a_bs, b_bs, k, T);
 
 
 % FFT-COS Prices
@@ -131,102 +135,109 @@ N = 5000;                         % default value 25, try 100,500,5000
 
 % BS Plot
 figure
-MakePdfPlot2(phi_bs,a_bs,b_bs,k,mu,u_0,N,1, 'B-S Pdf');
+MakePdfPlot2(phi_bs,a_bs,b_bs,k,mu,u_0,T,N,1, 'B-S Pdf');
 
 
 % Heston Plot
 % Heston truncation bounds
-MakePdfPlot2(phi_hest,a_hest,b_hest,k,mu,u_0,N,2, 'Heston Pdf');
+MakePdfPlot2(phi_hest,a_hest,b_hest,k,mu,u_0,T,N,2, 'Heston Pdf');
 
 
 % Variance Gamma Plot
-MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,3, 'Variance-Gamma Pdf');
+MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,T,N,3, 'Variance-Gamma Pdf');
 
 
 % CGMY Plot
 % CGMY - Parameters from CGMY ( 2003 )
-MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,4, 'CGMY Pdf');
-
+MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,T,N,4, 'CGMY Pdf');
 
 
 % Call Plots
 % BS
 subplot(2,4,1)
 plot(K,C_COS_bs,'r', 'DisplayName', 'BS'), grid on, hold on;
-plot(K,C_BS,'--k', 'DisplayName', 'True BS'),
+plot(K,C_BS,'--k', 'DisplayName', 'Analytical BS'),
 title('Black-Scholes Model')
 legend
-% axis([70 130 0.0 32])
+axis([min(strikes) max(strikes) 0.0 1800])
 subplot(2,4,5)
-plot(K,C_COS_bs-C_BS'), grid on, hold on;
-% axis([70 130 -0.5 2.5])
+plot(K,(C_COS_bs-C_BS')), grid on, hold on;
+title("Diff. between Cosine Method Black-Scholes" + newline + "and Analytical Black-Scholes")
+axis([min(strikes) max(strikes) -5.0 70.0])
 % Heston
 subplot(2,4,2)
 plot(K,C_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
-plot(K,C_BS,'--k', 'DisplayName', 'True BS'),
+plot(K,C_BS,'--k', 'DisplayName', 'Analytical BS'),
 title('Heston Model')
+axis([min(strikes) max(strikes) 0.0 1800])
 legend
-% axis([70 130 0.0 32])
+% axis([min(strikes) max(strikes) 0.0 2000])
 subplot(2,4,6)
-plot(K,C_COS_hest-C_BS'), grid on, hold on;
-% axis([70 130 -0.5 2.5])
-% Variance Gamma
+plot(K,(C_COS_hest-C_BS')), grid on, hold on;
+title("Diff. between Heston" + newline + "and Analytical Black-Scholes")
+axis([min(strikes) max(strikes) -5.0 70.0])% Variance Gamma
 subplot(2,4,3)
 plot(K,C_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
-plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
+plot(K,C_BS,'--k', 'DisplayName', 'Analytical BS'), 
 title('Variance Gamma Model')
 legend
-% axis([70 130 0.0 32])
+axis([min(strikes) max(strikes) 0.0 1800])
 subplot(2,4,7)
-plot(K,C_COS_vg-C_BS'), grid on, hold on;
-% axis([70 130 -0.5 2.5])
-% CGMY
+plot(K,(C_COS_vg-C_BS')), grid on, hold on;
+title("Diff. between Variance Gamma" + newline + "and Analytical Black-Scholes")
+axis([min(strikes) max(strikes) -5.0 70.0])% CGMY
 subplot(2,4,4)
 plot(K,C_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
-plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
+plot(K,C_BS,'--k', 'DisplayName', 'Analytical BS'), 
 title('CGMY Model')
 legend
-% axis([70 130 0.0 32])
+axis([min(strikes) max(strikes) 0.0 1800])
 subplot(2,4,8)
-plot(K,C_COS_cgmy-C_BS'), grid on, hold off;
-% axis([70 130 -0.5 2.5]);
-
+plot(K,(C_COS_cgmy-C_BS')), grid on, hold off;
+title("Diff. between CGMY" + newline + "and Analytical Black-Scholes")
+axis([min(strikes) max(strikes) -5.0 70.0])
 
 %{
 % Put Plots
+% BS
+subplot(2,4,1)
+plot(K,P_COS_bs,'r', 'DisplayName', 'BS'), grid on, hold on;
+plot(K,P_BS,'--k', 'DisplayName', 'Analytical BS'),
+title('Black-Scholes Model')
+legend
+axis([min(strikes) max(strikes) 0.0 2000])
+subplot(2,4,5)
+plot(K,(P_COS_bs-P_BS')), grid on, hold on;
+title('Black-Scholes - Analytical Black-Scholes')
+%axis([min(strikes) max(strikes) -0.05 0.05])
 % Heston
-subplot(2,3,1)
+subplot(2,4,2)
 plot(K,P_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
 plot(K,P_BS,'--k', 'DisplayName', 'True BS'),
 title('Heston Model')
 legend
-axis([70 130 0.0 32])
-subplot(2,3,4)
-plot(K,P_COS_hest-P_BS'), grid on, hold on;
-axis([70 130 -0.5 2.5])
+axis([min(strikes) max(strikes) 0.0 2000])
+subplot(2,4,6)
+plot(K,(P_COS_hest-P_BS')), grid on, hold on;
 % Variance Gamma
-subplot(2,3,2)
+subplot(2,4,3)
 plot(K,P_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
 plot(K,P_BS,'--k', 'DisplayName', 'True BS'), 
 title('Variance Gamma Model')
 legend
-axis([70 130 0.0 32])
-subplot(2,3,5)
-plot(K,P_COS_vg-P_BS'), grid on, hold on;
-axis([70 130 -0.5 2.5])
+axis([min(strikes) max(strikes) 0.0 2000])
+subplot(2,4,7)
+plot(K,(P_COS_vg-P_BS')), grid on, hold on;
 % CGMY
-subplot(2,3,3)
+subplot(2,4,4)
 plot(K,P_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
 plot(K,P_BS,'--k', 'DisplayName', 'True BS'), 
 title('CGMY Model')
 legend
-axis([70 130 0.0 32])
-subplot(2,3,6)
-plot(K,P_COS_cgmy-P_BS'), grid on, hold off;
-axis([70 130 -0.5 2.5])
+%axis([min(strikes) max(strikes) 0.0 2000])
+subplot(2,4,8)
+plot(K,(P_COS_cgmy-P_BS')), grid on, hold off;
 %}
-
-% Mean Squared Errors
 
 
 
@@ -235,10 +246,10 @@ axis([70 130 -0.5 2.5])
 
 
 %% ========== PRIVATE FUNCTIONS ==========
-function MakePdfPlot2(cf,a,b,k,mu,u_0,N,plotpos,name)
+function MakePdfPlot2(cf,a,b,k,mu,u_0,T,N,plotpos,name)
 bma = b-a;
 x = linspace(a,b,N);
-true=normpdf(x,mu, sqrt(u_0) );
+true=normpdf(x,mu, sqrt(u_0 * T));
 
 Fk = 2/bma * real( cf.*exp(-1i*k*a*pi/bma)   );
 Fk(1)=0.5*Fk(1);
@@ -253,13 +264,13 @@ plot(x,pdf, 'DisplayName', name), grid on;
 title(name)
 plot(x, true, 'DisplayName', 'Normal Pdf')
 legend
-axis([-1.5 1.5 0 4.5])
+axis([-sqrt(u_0*T)*12 sqrt(u_0*T)*12 0 4])
 hold off
 
 subplot(2,4,plotpos+4)
 plot(x,pdf(:)-true(:)), grid on;
 title(strcat(name, " - Normal Pdf"))
-axis([-1.5 1.5 -1.5 2.5])
+axis([-sqrt(u_0*T)*12 sqrt(u_0*T)*12 -1 1.2])
 
 
 end

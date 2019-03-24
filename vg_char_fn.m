@@ -1,4 +1,4 @@
-function phi_vg = vg_char_fn(u_0, theta, a, b, k, T, v, S0, mu)
+function phi_vg = vg_char_fn(u_0, theta, a, b, k, T, v, mu)
 
 %{
  This code computes the Characteristic Function for the Variance Gamma Process. 
@@ -38,7 +38,7 @@ omega   = k .* pi / (b - a);
 
 w = ( 1 / v ) * log(1 - theta * v - 0.5 * u_0 * v );
 
-phi_vg = exp( log(S0 + ( mu + w ) * T ) ./ ( 1 - 1i * theta * v * omega + ( u_0 * v / 2 ) * omega.^2 ).^(T/v) );
+phi_vg = exp( ( mu * T + w  * T) ).^(1i * omega) ./ ( 1 - 1i * theta * v * omega + ( u_0 * v / 2 ) * omega.^2 ).^(T/v);
 
 
 

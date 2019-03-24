@@ -33,7 +33,7 @@ fbl_next_expdate <- function(Symbols) {
   all.expiries <- tbl$optionChain$result$expirationDates[[1]]
   all.expiries.posix <- .POSIXct(as.numeric(all.expiries), 
                                  tz = "UTC")
-  
-  return(as.Date(all.expiries.posix[1]))
+  print(all.expiries.posix)
+  return(as.Date(all.expiries.posix[9]))
   
 }
