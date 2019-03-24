@@ -1,6 +1,15 @@
 %% Housekeeping
 
 clear, clc;
+
+
+%% Import Data
+
+parameters = readtable("params.csv");
+strikes    = readtable("strike_prices.csv");
+
+parameters = table2array(parameters(1,:));
+strikes    = table2array(strikes(:,1));
 %% Model Parameters
 
 % Heston Model Parameters [defaults from Fang and Oosterlee (2008)]
@@ -13,6 +22,7 @@ rho         = -0.5711;                          % Correlation between Wiener Pro
 
 % VG Parameters
 theta = -0.1436;
+v     = 0.0403 
 
 
 % CGMY Parameters from CGMY (2003)
@@ -21,27 +31,38 @@ G = 94.45;
 Y = 0.2495;
 M = 95.79;
 
-
+%{ 
+% original
 % Option / Underlying / Market Parameters
 T    = 1;                                       % Time to Maturity
 r    = 0;                                       % Risk-free Rate
 q    = 0;                                       % Dividend Yield
 S0   = 100;                                     % Initial Underlying Price
 mu   = r - q;                                   % Price Drift Rate
+%}
+
+% Option / Underlying / Market Parameters
+S0   = parameters(1);                           % Initial Underlying Price
+r    = 0;                                       % Risk-free Rate
+q    = 0;                                       % Dividend Yield
+T    = parameters(4);                           % Time to Maturity
+mu   = r - q;                                   % Price Drift Rate
+
+
 
 
 %% COS-FFT Truncation Bounds
 
 % Heston cumulants and integration bounds
 [c1, c2, ~]     = heston_cumulants_v1(mu, lambda, u_bar, u_0, eta, rho, T);
-[a_hest, b_hest]= cos_truncation_range_v2(c1,c2,0,12);
+[a_hest, b_hest]= cos_truncation_range_v2(c1,c2,0,20);
 
 % CGMY cumulants and integration bounds
 [c1, c2, c4, ~] = cgmy_cumulants_v2( u_0, T, mu, C, G, M, Y);
 [a_cgmy, b_cgmy]= cos_truncation_range_v2(c1,c2,c4,10);
 
 % VG cumulants and integration bounds
-[c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_0, T, theta, mu );
+[c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_0, T, theta, mu, v );
 [a_vg, b_vg]    = cos_truncation_range_v2(c1,c2,c4,10);
 
 % BS cumulants and integration bounds
@@ -51,16 +72,17 @@ mu   = r - q;                                   % Price Drift Rate
 
 %% COS - FFT Parameters
 
-N       = 5000;                 % Number of points to evaluate
+N       = 10000;                 % Number of points to evaluate
 k       = 0:(N - 1);            % Vector of N evaluation intervals
-K       = 70:130;               % Vector of M strike prices to evaluate
+K       = strikes';             % Vector of M strike prices to evaluate
 x       = log(S0 ./ K);         % Vector of M log prices
+
 
 
 % Characteristic functions for the log stock price
 phi_hest     = heston_char_fn_v2(mu, lambda, u_bar, u_0, eta, rho, a_hest, b_hest, k, T);
 phi_cgmy     = cgmy_char_fn(mu, u_0, C, G, Y, M, a_cgmy, b_cgmy, k, T);
-phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T);
+phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T, v);
 phi_bs       = bs_char_fn_v1(mu, u_0, a_bs, b_bs, k, T);
 
 
@@ -125,7 +147,7 @@ MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,3, 'Variance-Gamma Pdf');
 MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,4, 'CGMY Pdf');
 
 
-%{
+
 % Call Plots
 % BS
 subplot(2,4,1)
@@ -133,41 +155,41 @@ plot(K,C_COS_bs,'r', 'DisplayName', 'BS'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'True BS'),
 title('Black-Scholes Model')
 legend
-axis([70 130 0.0 32])
+% axis([70 130 0.0 32])
 subplot(2,4,5)
 plot(K,C_COS_bs-C_BS'), grid on, hold on;
-axis([70 130 -0.5 2.5])
+% axis([70 130 -0.5 2.5])
 % Heston
 subplot(2,4,2)
 plot(K,C_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'True BS'),
 title('Heston Model')
 legend
-axis([70 130 0.0 32])
+% axis([70 130 0.0 32])
 subplot(2,4,6)
 plot(K,C_COS_hest-C_BS'), grid on, hold on;
-axis([70 130 -0.5 2.5])
+% axis([70 130 -0.5 2.5])
 % Variance Gamma
 subplot(2,4,3)
 plot(K,C_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
 title('Variance Gamma Model')
 legend
-axis([70 130 0.0 32])
+% axis([70 130 0.0 32])
 subplot(2,4,7)
 plot(K,C_COS_vg-C_BS'), grid on, hold on;
-axis([70 130 -0.5 2.5])
+% axis([70 130 -0.5 2.5])
 % CGMY
 subplot(2,4,4)
 plot(K,C_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
 title('CGMY Model')
 legend
-axis([70 130 0.0 32])
+% axis([70 130 0.0 32])
 subplot(2,4,8)
 plot(K,C_COS_cgmy-C_BS'), grid on, hold off;
-axis([70 130 -0.5 2.5]);
-%}
+% axis([70 130 -0.5 2.5]);
+
 
 %{
 % Put Plots
