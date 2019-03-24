@@ -1,8 +1,8 @@
 function [c1, c2, c4, w] = cgmy_cumulants_v2( u_0, T, mu, C, G, M, Y)
 
 %{
- This code computes up to the 2nd cumulant of ln(St/K) for the Variance Gamma Model
- Equations are given in Fang and Oosterlee (2008), Table 11, p. 21
+ This code computes the first, second and fourth cumulant of ln(St/K) 
+ for the Variance Gamma Model Equations are given in Fang and Oosterlee (2008), Table 11, p. 21
 
  Authors : Baldi Lanfranchi, Federico
          : La Cour, Peter

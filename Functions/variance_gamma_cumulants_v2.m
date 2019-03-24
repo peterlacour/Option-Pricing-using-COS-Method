@@ -14,13 +14,13 @@ function [c1, c2, c4, w] = variance_gamma_cumulants_v2( u_0, T, theta, mu, v )
 
  Inputs : u_0           - variance
         : T             - time to maturity
-        : theta         - drift term
-        : mu            - mean return
+        : theta         - drift term of VG model
+        : mu            - mean drift
 
 
 Outputs : c1            - first cumulant (mean)
         : c2            - second cumulant (variance)
-        : omega         - drift correction term
+        : w             - drift correction term
 
 %}
 

@@ -1,15 +1,37 @@
+%{
+ 
+ Title         : COS-FFT Method to Option Pricing using different
+                 Characteristic Functions
+
+ Authors       : Baldi Lanfranchi, Federico
+               : La Cour, Peter
+ Version       : 1.0 (24.03.2019)
+
+ Place, Time   : St. Gallen, 24.03.2019
+ Description   : The code includes five characteristic functions: the
+                 Black-Scholes, the Heston, the Variance Gamma, the CGMY 
+                 and the FMLS (unused) and compares the distributional 
+                 characteristics by computing the distributions to a normal 
+                 distribution using the cosine series Fourier expansion . 
+                 The code then prices an option chain of the SPX with 
+                 maturity date of 20.03.2020 using the different 
+                 characteristic functions and compares it to the analytical 
+                 solution of the Black-Scholes model.
+
+Future       
+Improvements  :  Optimise parameters and compare pricing method to real
+                 option prices
+%}
+
 %% Housekeeping
-
 clear, clc;
-
 addpath("./Functions")
 
-%% Import Data
+%% Import Option Chain Data 
 
 parameters = readtable("params.csv");
 strikes    = readtable("strike_prices.csv");
 optionBids = readtable("option_prices.csv");
-
 
 parameters = table2array(parameters(1,:));
 strikes    = table2array(strikes(:,1));
@@ -25,34 +47,23 @@ eta         =  0.5751;                          % Volatility of the Volatility P
 rho         = -0.5711;                          % Correlation between Wiener Processes
 
 
-% VG Parameters
-theta = -0.1436;
-v     = 0.0403;
+% VG Parameters [defaults from Madan et al. (1998) and Carr et al. (2002)]
+theta      = -0.1436;
+v          = 0.0403;
 
 
-% CGMY Parameters from CGMY (2003)
-C = 24.79;
-G = 94.45;
-Y = 0.2495;
-M = 95.79;
-
-%{ 
-% original
-% Option / Underlying / Market Parameters
-T    = 1;                                       % Time to Maturity
-r    = 0;                                       % Risk-free Rate
-q    = 0;                                       % Dividend Yield
-S0   = 100;                                     % Initial Underlying Price
-mu   = r - q;                                   % Price Drift Rate
-%}
-
+% CGMY Parameters [defaults from Carr et al. (2002)]
+C          = 24.79;
+G          = 94.45;
+Y          = 0.2495;
+M          = 95.79;
 
 % Option / Underlying / Market Parameters
-S0   = parameters(1);                           % Initial Underlying Price
-r    = parameters(2);                                  % Risk-free Rate
-q    = parameters(3);                              % Dividend Yield
-T    = parameters(4);                           % Time to Maturity
-mu   = r - q;                                   % Price Drift Rate
+S0         = parameters(1);                           % Initial Underlying Price
+r          = parameters(2);                           % Risk-free Rate
+q          = parameters(3);                           % Dividend Yield
+T          = parameters(4);                           % Time to Maturity
+mu         = r - q;                                   % Price Drift Rate
 
 
 
@@ -80,9 +91,7 @@ mu   = r - q;                                   % Price Drift Rate
 N       = 500;                 % Number of points to evaluate
 k       = 0:(N - 1);            % Vector of N evaluation intervals
 K       = strikes';             % Vector of M strike prices to evaluate
-%K       = 70:130;
 x       = log(S0 ./ K);         % Vector of M log prices
-
 
 
 % Characteristic functions for the log stock price
@@ -99,59 +108,31 @@ phi_bs       = bs_char_fn_v1(u_0, a_bs, b_bs, k, T);
 [C_COS_bs,   P_COS_bs]   = cos_option_price_v1(a_bs,   b_bs,   k, K, phi_bs,   x, mu, T);
 
 
-
-%% Plots
-
-% Black and Scholes Option Prices
+% Black and Scholes Analytical Option Prices
 % Based on code by Peter.Gruber@unisg.ch, and Paul.Soderlind@unisg.ch
 [C_BS, P_BS, ~, ~] = black_scholes_price(S0,K,r,T,sqrt(u_0),q);
 
-subplot(2,3,1)
-plot(K,C_COS_hest,'r'), grid on, hold on;
-plot(K,C_BS,'--k'), 
 
-subplot(2,3,4)
-plot(K,C_COS_hest-C_BS'), 
-
-subplot(2,3,2)
-plot(K,C_COS_vg,'r'), grid on, hold on;
-plot(K,C_BS,'--k'), 
-
-subplot(2,3,5)
-plot(K,C_COS_vg-C_BS'), 
-
-subplot(2,3,3)
-plot(K,C_COS_cgmy,'r'), 
-plot(K,C_BS,'--k'), 
-
-subplot(2,3,6)
-plot(K,C_COS_cgmy-C_BS'), 
-hold off;
-
-
-%% SETUP
+%% Distribution Plots
 Npoints = 5000;
-N = 5000;                         % default value 25, try 100,500,5000
-
+N       = 5000;                         
 
 % BS Plot
 figure
 MakePdfPlot2(phi_bs,a_bs,b_bs,k,mu,u_0,T,N,1, 'B-S Pdf');
 
-
 % Heston Plot
 % Heston truncation bounds
 MakePdfPlot2(phi_hest,a_hest,b_hest,k,mu,u_0,T,N,2, 'Heston Pdf');
 
-
 % Variance Gamma Plot
 MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,T,N,3, 'Variance-Gamma Pdf');
-
 
 % CGMY Plot
 % CGMY - Parameters from CGMY ( 2003 )
 MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,T,N,4, 'CGMY Pdf');
 
+%% Option Price Plots
 
 % Call Plots
 % BS
@@ -165,6 +146,7 @@ subplot(2,4,5)
 plot(K,(C_COS_bs-C_BS')), grid on, hold on;
 title("Diff. between Cosine Method Black-Scholes" + newline + "and Analytical Black-Scholes")
 axis([min(strikes) max(strikes) -5.0 70.0])
+
 % Heston
 subplot(2,4,2)
 plot(K,C_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
@@ -172,11 +154,12 @@ plot(K,C_BS,'--k', 'DisplayName', 'Analytical BS'),
 title('Heston Model')
 axis([min(strikes) max(strikes) 0.0 1800])
 legend
-% axis([min(strikes) max(strikes) 0.0 2000])
 subplot(2,4,6)
 plot(K,(C_COS_hest-C_BS')), grid on, hold on;
 title("Diff. between Heston" + newline + "and Analytical Black-Scholes")
-axis([min(strikes) max(strikes) -5.0 70.0])% Variance Gamma
+axis([min(strikes) max(strikes) -5.0 70.0])
+
+% Variance Gamma
 subplot(2,4,3)
 plot(K,C_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'Analytical BS'), 
@@ -186,7 +169,9 @@ axis([min(strikes) max(strikes) 0.0 1800])
 subplot(2,4,7)
 plot(K,(C_COS_vg-C_BS')), grid on, hold on;
 title("Diff. between Variance Gamma" + newline + "and Analytical Black-Scholes")
-axis([min(strikes) max(strikes) -5.0 70.0])% CGMY
+axis([min(strikes) max(strikes) -5.0 70.0])
+
+% CGMY
 subplot(2,4,4)
 plot(K,C_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'Analytical BS'), 
@@ -242,12 +227,9 @@ plot(K,(P_COS_cgmy-P_BS')), grid on, hold off;
 
 
 
-
-
-
-
 %% ========== PRIVATE FUNCTIONS ==========
 function MakePdfPlot2(cf,a,b,k,mu,u_0,T,N,plotpos,name)
+%  Based on Peter.Gruber@unisg.ch, February 2007
 bma = b-a;
 x = linspace(a,b,N);
 true=normpdf(x,mu, sqrt(u_0 * T));
@@ -272,6 +254,5 @@ subplot(2,4,plotpos+4)
 plot(x,pdf(:)-true(:)), grid on;
 title(strcat(name, " - Normal Pdf"))
 axis([-sqrt(u_0*T)*12 sqrt(u_0*T)*12 -1 1.2])
-
 
 end

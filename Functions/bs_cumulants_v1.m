@@ -2,14 +2,12 @@ function [c1, c2, c4, w] = bs_cumulants_v1(u_0, mu, T )
 
 %{
  
-
-
  Authors : Baldi Lanfranchi, Federico
          : La Cour, Peter
 
  Version : 1.0 (21.03.2019)
 
- phi_hes = heston_char_function_v1(mu, lambda, u_bar, u_0, eta, rho, omega, T)
+ [c1, c2, c4, w] = bs_cumulants_v1( u_0, mu, T )
 
 
  Inputs : mu            - log price drift rate
@@ -17,10 +15,10 @@ function [c1, c2, c4, w] = bs_cumulants_v1(u_0, mu, T )
         : T             - time to maturity
 
 
-Outputs : c1             - 
-        : c2             - 
-        : c4
-        : omega
+Outputs : c1             - first cumulant
+        : c2             - second cumulant
+        : c4             - fourth cumulant
+        : w              - drift correction term
 
 %}
 
@@ -28,5 +26,5 @@ c1 = mu * T;
 c2 = u_0 * T;
 c4 = 0;
 
-% Drift correction term (0 for the Heston Model)
+% Drift correction term
 w = 0;

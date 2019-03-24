@@ -20,12 +20,9 @@ function phi_cgmy = cgmy_char_fn(mu, u_0, C, G, Y, M, a, b, k, T)
         : omega         - argument of the characteristic function
         : C             - measure of the overall level of activity of the
                           process, controls the kurtosis
-        : G             - controls the exponential decay on the right tail 
-                          of the process
-        : M             - controls the exponential decay on the left tail 
-                          of the process
-        : Y             - characterizes the fine structure of the jumps of 
-                          the CGMY process
+        : G             - Geman Parameter
+        : M             - Madan Parameter
+        : Y             - Yor Parameter
         : u_0           - variance
 
 Outputs : phi_cgmy      - characteristic function values [0:N-1] vector

@@ -5,7 +5,7 @@ function [V_k_call, V_k_put] = cos_series_analytical_integrals_v1(a, b, k, K)
  Based on code by Peter.Gruber@unisg.ch
 
 
- This function computes the Vk integrals for the Lévy Processes and the Heston
+ This function computes the Vk integrals for the Levy Processes and the Heston
  model. Vk coefficients enter the COS expansion for plain vanilla options. The following
  code is vectorised in k.
  Implementation follows Fang and Oosterlee (2008), Eq. (29) p. 7.

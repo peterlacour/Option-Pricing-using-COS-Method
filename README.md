@@ -346,7 +346,9 @@ The characteristic function of the CGMY model can be written as:
 
 <img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{CGMY}&space;&&space;=&space;exp\left(&space;i&space;\omega&space;\mu&space;T&space;-&space;0.5&space;\omega^2&space;u_0&space;T&space;\right)&space;\cdot&space;exp\left(&space;T&space;C&space;\Gamma(-Y)\left[&space;(M&space;-&space;i&space;\omega&space;)^Y&space;-M^Y&space;&plus;&space;(G&plus;i&space;\omega)^Y&space;-&space;G^Y&space;\right]&space;\right&space;)&space;\notag&space;\end{align}" title="\begin{align} \varphi_{CGMY} & = exp\left( i \omega \mu T - 0.5 \omega^2 \sigma^2 T \right) \cdot exp\left( T C \Gamma(-Y)\left[ (M - i \omega )^Y -M^Y + (G+i \omega)^Y - G^Y \right] \right ) \notag \end{align}" />
 
-where C can be described as a measure of the overall level of activity of the process, G controls the exponential decay on the right of the process and M controls the exponential decay on the left. For example, if G < M, the left tail of the distribution would be heavierthan the right tail. The parameter Y is used to model additional characteristics of the process and a description of it can be found in Carr et al. (2002) or in Vershik and Yor (1995).
+where C can be described as a measure of the overall level of activity of the process, G controls the exponential decay on the right of the process and M controls the exponential decay on the left. For example, if G < M, the left tail of the distribution would be heavierthan the right tail. The parameter Y icharacterizes the fine structure of the jumps of the CGMY process and a more in depth description of it can be found in Carr et al. (2002).
+
+
 
 For the purpose of this project the parameters C, G, M and Y were chosen according to Carr et al. (2002) with values of 24.79, 94.45, 95.79 and 0.2495 respectively.
 

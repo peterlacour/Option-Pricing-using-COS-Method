@@ -16,7 +16,7 @@ function [C_COS, P_COS] = cos_option_price_v1(a, b, k, K, phi, x, mu, T)
         : k             - Vector of N evaluation intervals
         : K             - Vector of M strike prices to evaluate
         : phi           - values from given characteristic function
-        : x             - Vector of M log prices 
+        : x             - Vector of M strike prices to evaluate
         : mu            - drift = r - q 
         : T             - time to maturity
 

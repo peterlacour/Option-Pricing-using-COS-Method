@@ -5,7 +5,7 @@ function phi_vg = vg_char_fn(u_0, theta, a, b, k, T, v, mu)
  Notation follows Madan, Carr and Chang (1998), eq. 7, p. 8. 
  theta's average value in Madan, Carr, Chang (1998) is -0.1436, 
  theta = 0 gives the symmetric variance gamma,
- theta < 0 incorporates negatively skewness in the model.
+ theta < 0 incorporates negative skewness in the model.
  
  Source: A.Itkin ”Pricing options with VG model using FFT”. 
                    The Variance Gamma and Related Financial Models. August 9, 2007 – p. 7
