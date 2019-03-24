@@ -110,9 +110,9 @@ Analytic forms for <img src="https://latex.codecogs.com/gif.latex?\inline&space;
 
 The Black-Scholes model is arguably the most famous option pricing model. The model assumes that the underlying asset process can be described by a Geometric Brownian Motion. Thus, one of the main assumptions of the model is that the logarithmic returns are normally distributed. The stochastic differential equation takes the form:
 
-<img src="https://latex.codecogs.com/gif.latex?\inline&space;\begin{align}&space;dS_t&space;=&space;S_t&space;\left(&space;\mu&space;dt&space;&plus;&space;\sqrt{u_0}&space;\&space;\&space;dW_t&space;\right)&space;\notag&space;\end{align}" title="\begin{align} dS_t = S_t \left( \mu dt + \sqrt{u_t} \ \ dW_t \right) \notag \end{align}" />
+<img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;dS_t&space;=&space;S_t&space;\left(&space;\mu&space;dt&space;&plus;&space;\sqrt{u_0}&space;\&space;\&space;dW_t&space;\right)&space;\notag&space;\end{align}" title="\begin{align} dS_t = S_t \left( \mu dt + \sqrt{u_t} \ \ dW_t \right) \notag \end{align}" />
 
-where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\mu" title="\mu" /> is the drift term and <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_0" title="u_t" /> is the variance of the process.
+where <img src="https://latex.codecogs.com/gif.latex?\mu" title="\mu" /> is the drift term and <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_0" title="u_t" /> is the variance of the process.
 
 From this, by making a change of measure using the risk neutral probability and after some manipulations, one gets the characteristic function of the Black Scholes model which follows a normal distribution: 
 
