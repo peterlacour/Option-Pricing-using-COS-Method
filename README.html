@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>README</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style>
+.latex-wrap{display:block; 
+              padding:0; 
+              margin: 0; 
+              white-space:nowrap;}
+              
+              
+.latex-eq-body{width:90%; 
+                 display:inline-block;}
+
+.latex-eq-num{width:10%; 
+                display:inline-block; 
+                text-align:right;}
+
+</style>
+
+<div align="right">
+Advanced Numerical Methods and Data Analysis - FS19-8,780
+<br>
+University of St. Gallen, 24.03.2019
+<br>
+</div>
+
+<hr>
+
+<h1 id="toc_0">Option Pricing using the Cosine Fast Fourier Transform Method</h1>
+
+<p><strong>Federico Baldi Lanfranchi</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; federico.baldilanfranchi@student.unisg.ch <br>
+<strong>Peter la Cour</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;peter.lacour@student.unisg.ch</p>
+
+<h2 id="toc_1"><div id="0"><a href="#0">Overview</a></div></h2>
+
+<ol>
+<li><a href="#2">Introduction</a></li>
+<li><a href="#A2">Description of the Cos-FFT Method</a></li>
+<li><a href="#B2">Characteristic Functions</a>
+
+<ul>
+<li><a href="#BB1">Black-Scholes Model </a></li>
+<li><a href="#BB2">Heston Model</a></li>
+<li><a href="#BB3">Variance Gamma Model</a></li>
+<li><a href="#BB4">CGMY Model</a></li>
+</ul></li>
+<li><a href="#C2">Distributional Characteristics of the different Models</a></li>
+<li><a href="#D2">Option Pricing with the COS-FFT Method</a></li>
+<li><a href="#E2">Concluding Remarks</a></li>
+<li><a href="#F2"> References </a></li>
+</ol>
+
+<h2 id="toc_2"><div id="2"> <a href="#0">Introduction  </a> </div></h2>
+
+<p>In the following, we compute prices for one day of European put and call options on the S&amp;P 500 Index through the COS method, pioneered by Fang and Oosterle (2008). For this study, we consider options expiring on the March 20, 2020, whose maturity is close to one year at the time of writing, March 24, 2019. </p>
+
+<p>We compare estimated prices under four underlying diffusion assumptions, namely the Black-Scholes, Heston, Variance Gamma and CGMY models. In doing so, we employ calibrated parameters from some of the original papers. Consequently, we cannot make statements about the accuracy of the COS method with respect to other numerical option pricing techniques at this stage, since realised option prices should instead reflect current market parameters. We leave this analysis to successive work, where such parameters will be calibrated through numerical optimization. We thus take the Black-Scholes model, for which an analytical pricing formula is available, as a reference framework. We then comment on whether COS prices capture the intended deviation of other models from the BS setup, despite truncation of the domain and finite precision. We find that, in general, this seems to be the case.</p>
+
+<h2 id="toc_3"><div id="A2"> <a href="#0">Description of the COS-FFT Method</a> </div></h2>
+
+<p>The COS mehod (Fang and Oosterlee, 2008) is a novel option pricing method based on a Fourier-cosine expansion of the density function. The algorithm can be applied to european plain vanilla options and to some options with early exercise rights. Cosine expansions offer an alternative to the industry-standard Fast Fourier Transform (FFT) approach developed in Carr and Madan (1999). Both  FFT and the COS method exploit knowledge of the characteristic function of the underlying process, which is often given, even when the density is unknown. However, the COS method can be significantly faster, while also circumventing some of the issues with the FFT approach, which are briefly highlighted in next section. FFT-based methods&#39; for option pricing typically exhibit second order accuracy with computational complexity <img src="https://latex.codecogs.com/gif.latex?\inline&space;O(N&space;\log_2(N))" title="O(N \log_2(N))" /> (Fang and Oosterlee, 2008). The COS method instead can achieve exponential convergence, while keeping computational complexity linear. </p>
+
+<h3 id="toc_4"><div id="BB1"> Carr-Madan FFT </div></h3>
+
+<p>Since the characteristic function is equivalent to the Fourier transform of the density function in the risk-neutral domain the pricing problem can be solved in Fourier domain. FFT then relies on numerical integration through quadrature rules to solve the inverse Fourier integral and tranform the solution back to the time domain. The Fourier transform is taken with respect to the log strike price <img src="https://latex.codecogs.com/gif.latex?\inline&space;k&space;=&space;ln(K)" title="k = ln(K)" />, with <img src="https://latex.codecogs.com/gif.latex?\inline&space;x&space;=&space;ln(S_T)" title="x = ln(S_T)" />. The price for a European call option can then be expressed as:</p>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?C_T(k)&space;=&space;e^{-rT}&space;E^{Q}[(S_T-K)^&plus;]=&space;e^{-rT}&space;\int^\infty_k&space;(e^x&space;-&space;e^k)q(x)" title="C_T(k) = e^{-rT} E^{Q}[(S_T-K)^+]= e^{-rT} \int^\infty_k (e^x - e^k)q(x)" />
+</div>
+<div class="latex-eq-num"> (1) </div>
+</div>
+
+<p>Where <img src="https://latex.codecogs.com/gif.latex?\inline&space;q(\cdot)" title="q(\cdot)" /> denotes the risk-neutral density function. When <img src="https://latex.codecogs.com/gif.latex?\inline&space;k" title="k" /> goes to <img src="https://latex.codecogs.com/gif.latex?\inline&space;-\infty" title="-\infty" />, the call price converges to <img src="https://latex.codecogs.com/gif.latex?\inline&space; S_0" title="S_0" />. As a result, the call pricing function is not square integrable, and its Fourier integral is not well defined. Since FFT evaluates the characteristic function at <img src="https://latex.codecogs.com/gif.latex?\inline&space;0" title="0" />, the introduction of a damping parameter <img src="https://latex.codecogs.com/gif.latex?\inline&space;e^{\alpha k}" title="e^{\alpha k}" /> is necessary to in order to shift the singularity away from the origin. Lewis (2001) and Lee (2004) show how this is equivalent to evaluating a contour integral in the complex plane, where the pole is shifted away from the real line on the immaginary axis. </p>
+
+<p>However, the Carr-Madan approach suffers from some disadvantages. First, quadrature rules employed for numerical integration can be inefficient due to the highly oscillatory nature of integrands. Further, for this same reason the choice of the damping parameter has profound implications in terms of efficiency. Higher values of <img src="https://latex.codecogs.com/gif.latex?\inline&space;\alpha" title="\alpha" /> can make integration less stable on the positive log-strike axis, so that the damping parameter must be chosen carefully. Oscillatory behaviour becomes more pronounced close to expiration, when the option approaches its intrisic value. Treating this issue requires a different adjustment factor based on the hyperbolic sine. </p>
+
+<p>Another issue with the FFT method is that the number of evaluation arguments \(N\) must necessarily be a power of 2, which can be undesirable. Further, the grid size for the numerical integration is typically tied to the spacing between strike prices by the Nyquist relation:</p>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?\Delta&space;x&space;\cdot&space;\Delta&space;\omega&space;=&space;\frac{2&space;\pi}{N}" title="\Delta x \cdot \Delta \omega = \frac{2 \pi}{N}" />
+</div>
+<div class="latex-eq-num"> (2) </div>
+</div>
+
+<p>where <img src="https://latex.codecogs.com/gif.latex?\inline&space;x" title="x" /> denotes the log price and <img src="https://latex.codecogs.com/gif.latex?\inline&space;w" title="w" /> denotes the argument of the characteristic function. Choosing a fine grid to improve integration accuracy increases the spacing between strike prices at which option prices are computed. Strikes are then pushed deeper in- and out-of-the-money, leading to a lower number of option prices laying in the relevant region.</p>
+
+<h3 id="toc_5"><div id="BB1"> COS Method </div></h3>
+
+<p>The COS method does not rely on numerical integration to price contingent claims. Rather, it replaces the entire density with its cosine series expansion. The cosine expansion is defined for functions with support on <img src="https://latex.codecogs.com/gif.latex?\inline&space;[0,\pi]" title="[0,\pi]" />. Through change of variables, it can be generalised to functions with support on a generic finite interval <img src="https://latex.codecogs.com/gif.latex?\inline&space;[a,b]" title="[a,b]" />. </p>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?\sum_{k=0}^{&plus;\infty}'&space;A_k&space;\cdot&space;\cos&space;\Big(k&space;\pi&space;(x-a)/(b-a)&space;\Big)" title="\sum_{k=0}^{+\infty}' A_k \cdot \cos \Big(k \pi (x-a)/(b-a) \Big)" />
+</div>
+<div class="latex-eq-num"> (3) </div>
+</div>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?A_k&space;=&space;\frac{2}{b-a}&space;\int^{b}_{a}&space;f(x)&space;\cos\Big(k&space;\pi&space;\frac{x-a}{b-a}\Big)dx" title="A_k = \frac{2}{b-a} \int^{b}_{a} f(x) \cos\Big(k \pi \frac{x-a}{b-a}\Big)dx" />
+</div>
+<div class="latex-eq-num"> (4) </div>
+</div>
+
+<p>Where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\sum&space;'" title="\sum '" /> indicates that the first summand is divided by 2. The density inside the equation for the <img src="https://latex.codecogs.com/gif.latex?\inline&space;A_k" title="A_k" /> terms can be substituted through an approximation of the characteristic function on the <img src="https://latex.codecogs.com/gif.latex?\inline&space;(a,b)" title="(a,b)" /> interval, which introduces a first error component, <i>i.e.</i> <img src="https://latex.codecogs.com/gif.latex?\inline&space;\varphi&space;\approx&space;\varphi_1&space;=&space;\int^b_a&space;e^{iux}&space;\cdot&space;f(x)&space;dx" title="\varphi \approx \varphi_1 = \int^b_a e^{iux} \cdot f(x) dx" />. This gives </p>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?A_k&space;=&space;\frac{2}{b-a}&space;Re\Big\{\varphi_1\&space;\Big(&space;\frac{k&space;\pi}{b-a}\Big)&space;\cdot&space;\exp\Big(-i&space;\frac{k&space;a&space;\pi}{b-a}&space;\Big)&space;\Big\}" title="A_k = \frac{2}{b-a} Re\Big\{\varphi_1\ \Big( \frac{k \pi}{b-a}\Big) \cdot \exp\Big(-i \frac{k a \pi}{b-a} \Big) \Big\}" />
+</div>
+<div class="latex-eq-num"> (5) </div>
+</div>
+
+<p>Which can be approximated by:</p>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?F_k&space;=&space;\frac{2}{b-a}&space;Re\Big\{\varphi&space;\Big(&space;\frac{k&space;\pi}{b-a}\Big)&space;\cdot&space;\exp\Big(-i&space;\frac{k&space;a&space;\pi}{b-a}&space;\Big)&space;\Big\}" title="F_k = \frac{2}{b-a} Re\Big\{\varphi \Big( \frac{k \pi}{b-a}\Big) \cdot \exp\Big(-i \frac{k a \pi}{b-a} \Big) \Big\}" />
+</div>
+<div class="latex-eq-num"> (6) </div>
+</div>
+
+<p>We then substitute <img src="https://latex.codecogs.com/gif.latex?\inline&space;F_k" title="F_k" /> for <img src="https://latex.codecogs.com/gif.latex?\inline&space;A_k" title="A_k" />in the infinite series and truncate the sum, which introduces a second source of approximation error. The price of a contingent claim, which is given by an expectation in terms of the risk neutral density, can then be computed. In the case of a call option the equation reads:</p>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?C(x,T)&space;=&space;e^{-&space;r&space;\tau&space;}&space;\sum^{N-1}_{k=0}&space;'&space;Re\Big\{\varphi&space;\Big(&space;k&space;\pi&space;/&space;(b-a)&space;\Big)&space;\cdot&space;\exp\Big(-i&space;k&space;a&space;\pi/(b-a)&space;\Big)&space;\Big\}&space;V_k^{call}" title="C(x,T) = e^{- r \tau } \sum^{N-1}_{k=0} ' Re\Big\{\varphi \Big( k \pi / (b-a) \Big) \cdot \exp\Big(-i k a \pi/(b-a) \Big) \Big\} V_k^{call}" />
+</div>
+<div class="latex-eq-num"> (7) </div>
+</div>
+
+<p>where <img src="https://latex.codecogs.com/gif.latex?\inline&space;V_k" title="V_k" /> call is the integral resulting from the inversion of summation and integral sign, which can be computed analytically. In particular:</p>
+
+<div class="latex-wrap">
+<div class="latex-eq-body">
+<img src="https://latex.codecogs.com/gif.latex?V_k^{call}&space;=&space;\frac{2}{b-a}&space;K&space;(\chi_k(0,b)-\psi_k(0,b))" title="V_k^{call} = \frac{2}{b-a} K (\chi_k(0,b)-\psi_k(0,b))" />
+</div>
+<div class="latex-eq-num"> (8) </div>
+</div>
+
+<p>Analytic forms for <img src="https://latex.codecogs.com/gif.latex?\inline&space;\chi_k" title="\chi_k" /> and <img src="https://latex.codecogs.com/gif.latex?\inline&space;\psi_k" title="\psi_k" /> are given in Fang and Oosterlee (2008).</p>
+
+<div align="right"><a href="#0">Back to top</a> </div>
+
+<h2 id="toc_6"><div id="B2"> <a href="#0">Characteristic Functions</a> </div></h2>
+
+<h3 id="toc_7"><div id="BB1"> Black-Scholes Model </div></h3>
+
+<p>The Black-Scholes model is arguably the most famous option pricing model. The model assumes that the underlying asset process can be described by a Geometric Brownian Motion. One of the main assumptions of the model is that the logarithmic returns are normally distributed. The stochastic differential equation takes the form:</p>
+
+<p><img src="https://latex.codecogs.com/gif.latex?\inline&space;\begin{align}&space;dS_t&space;=&space;S_t&space;\left(&space;\mu&space;dt&space;&plus;&space;\sqrt{u_0}&space;\&space;\&space;dW_t&space;\right)&space;\notag&space;\end{align}" title="\begin{align} dS_t = S_t \left( \mu dt + \sqrt{u_0} \ \ dW_t \right) \notag \end{align}" /></p>
+
+<p>where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\mu" title="\mu" /> is the drift term and <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_0" title="u_0" /> is the variance of the process.</p>
+
+<p>From this, by making a change of measure using the risk neutral probability and after some manipulations, one gets the characteristic function of the Black Scholes model which follows a normal distribution: </p>
+
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{BS}&space;=&space;exp&space;\left(&space;(&space;-&space;0.5&space;u_0&space;)&space;i&space;T&space;\omega&space;-&space;0.5&space;u_0&space;T&space;\omega^2&space;\right&space;)&space;\notag&space;\end{align}" title="\begin{align} \varphi_{BS} = exp \left( ( - 0.5 u_0 ) i T \omega - 0.5 u_0 T \omega^2 \right ) \notag \end{align}" /></p>
+
+<p>Following Schmelzle (2010) page 39.</p>
+
+<p><details><summary>Click to see Matlab code</summary>
+<p></p>
+
+<div><pre><code class="language-Matlab">function phi_bs = bs_char_fn_v1(u_0, a, b, k, T)
+
+%{
+ This code computes the Characteristic Function for the Black-Scholes Model
+ Notation follows Schmelzle (2010), eq. 5.10, p. 37
+
+ Authors : Baldi Lanfranchi, Federico
+         : La Cour, Peter
+
+ Version : 1.0 (21.03.2019)
+         : 2.0 (23.03.2019) Added internal computation of omegas
+
+ phi_bs = bs_char_fn_v1(u_0, a, b, k, T)
+
+ Inputs : u_0           - variance
+        : T             - time to maturity
+        : a             - Cosine argument (lower truncation bound) 
+        : b             - Cosine argument (upper truncation bound)
+        : k             - Vector of N evaluation intervals
+
+Outputs : phi_bs        - characteristic function values [0:N-1] vector
+
+%}
+
+
+% Vector of N evaluation arguments for the characteristic function
+omega   = k .* pi / (b - a);
+
+phi_bs = exp(( -0.5 * u_0 ) * 1i * T .* omega - 0.5 * u_0 * T * omega .^2);</code></pre></div>
+
+<p></details>
+</p></p>
+
+<h3 id="toc_8"><div id="BB2"> Heston Model </div></h3>
+
+<p>The Heston model incorporates a stochastic volatility term and can be described by this system of stochastic differential equations:</p>
+
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;ds_t&space;&&space;=&space;(\mu&space;-0.5u_t)dt&space;&plus;&space;sqrt{u_t}&space;\&space;\&space;dW_{1t}&space;\notag&space;\\&space;du_t&space;&=&space;\lambda(\bar{u}&space;-u_t)dt&space;&plus;&space;\eta&space;\sqrt{u_t}&space;\&space;\&space;dW_{2t}&space;\notag&space;\end{align}" title="\begin{align} ds_t & = (\mu -0.5u_t)dt + sqrt{u_t} \ \ dW_{1t} \notag \\ du_t &= \lambda(\bar{u} -u_t)dt + \eta \sqrt{u_t} \ \ dW_{2t} \notag \end{align}" /></p>
+
+<p>where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\mu" title="\mu" /> is the drift term <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_t" title="u_t" /> is the stochastic variance, <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_0" title="u_0" /> is the initial volatility, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\bar{u}" title="\bar{u}" /> is the long term variance, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\lambda" title="\lambda" /> is the speed of mean reversion of the stochastic volatility, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\eta" title="\eta" /> is the volatility of the volatility and <img src="https://latex.codecogs.com/gif.latex?\inline&space;W_{1t}" title="W_{1t}" /> and <img src="https://latex.codecogs.com/gif.latex?\inline&space;W_{2t}" title="W_{2t}" /> are two correlated Wiener processes.</p>
+
+<p>The characteristic function of the log strike price can be written as:</p>
+
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{hes}&space;&&space;=&space;exp\left(&space;i&space;\omega&space;\mu&space;T&space;&plus;&space;\frac{u_0}{\eta^2}&space;\left(&space;\frac{1-&space;e^{-DT}}{1-Ge^{-DT}}&space;\right)&space;(\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;)&space;\right)&space;\notag&space;\\&space;where&space;\&space;\&space;D&space;&&space;=&space;\sqrt{&space;(\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;)^2&space;&plus;&space;(&space;\omega^2&space;&plus;&space;i&space;\omega&space;)&space;\eta^2&space;}&space;\&space;\&space;and&space;\&space;\&space;G&space;=&space;\frac{\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;-&space;D&space;}{&space;\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;&plus;&space;D&space;}&space;\notag&space;\end{align}" title="\begin{align} \varphi_{hes} & = exp\left( i \omega \mu T + \frac{u_0}{\eta^2} \left( \frac{1- e^{-DT}}{1-Ge^{-DT}} \right) (\lambda - i \rho \eta \omega ) \right) \notag \\ where \ \ D & = \sqrt{ (\lambda - i \rho \eta \omega )^2 + ( \omega^2 + i \omega ) \eta^2 } \ \ and \ \ G = \frac{\lambda - i \rho \eta \omega - D }{ \lambda - i \rho \eta \omega + D } \notag \end{align}" /></p>
+
+<p>For this project the parameters were taken from Fang and Osterle (2008) with <img src="https://latex.codecogs.com/gif.latex?\inline&space;\lambda" title="\lambda" /> = 1.5768, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\bar{u}" title="\bar{u}" /> = 0.0398, <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_0" title="u_0" /> = 0.0175, <img src="https://latex.codecogs.com/gif.latex?\inline&space;\eta" title="\eta" /> = 0.5751 and <img src="https://latex.codecogs.com/gif.latex?\inline&space;\rho" title="\rho" /> = -0.5711.</p>
+
+<p>For more documentation on the Heston model, see Heston (1993) and for information on the Heston model with the Cosine Method see Fang and Oosterlee (2009).</p>
+
+<p><details><summary>Click to see Matlab code</summary>
+<p></p>
+
+<div><pre><code class="language-Matlab">function phi_hest = heston_char_fn_v2(mu, lambda, u_bar, u_0, eta, rho, a, b, k, T)
+
+%{
+ This code computes the Characteristic Function for the Heston Model
+ Notation follows Fang and Oosterlee (2009), eq. 32, p. 8
+
+ Authors : Baldi Lanfranchi, Federico
+         : La Cour, Peter
+
+ Version : 1.0 (21.03.2019)
+         : 2.0 (23.03.2019) Added internal computation of omegas
+
+ phi_hest = heston_char_fn_v2(mu, lambda, u_bar, u_0, eta, rho, a, b, k, T)
+
+
+ Inputs : mu            - log price drift rate
+        : lambda        - speed of mean reversion
+        : u_bar         - mean (long run) volatility
+        : u_0           - initial volatility
+        : eta           - volatility of the volatility (vol of vol)
+        : rho           - correlation between Wiener processes (W1 and W2)
+        : T             - time to maturity
+        : a             - Cosine argument (lower truncation bound) 
+        : b             - Cosine argument (upper truncation bound)
+        : k             - Vector of N evaluation intervals
+
+Outputs : phi_hest      - characteristic function values [0:N-1] vector
+
+%}
+
+
+% Vector of N evaluation arguments for the characteristic function
+omega   = k .* pi / (b - a);
+
+
+% D and G parameters: Fang and Oosterlee (2008) p. 8
+D = sqrt( (lambda - 1i * rho * eta * omega) .^ 2 + (omega .^ 2 + 1i * omega) * eta ^ 2 );
+G = (lambda - 1i * rho * eta * omega - D) ./ (lambda - 1i * rho * eta * omega + D);
+
+
+% Characteristic function for the Heston Model: 
+% Fang and Oosterlee (2008) p. 8
+phi_hest = exp( 1i * omega * mu * T + ...
+           (u_0 / eta ^ 2) * (1 - exp(-D * T)) ./ (1 - G .* exp(-D * T)) .* (lambda - 1i * rho * eta * omega - D) + ...
+           (lambda * u_bar / eta ^ 2 * (T * (lambda - 1i * rho * eta * omega - D) - 2 * log( (1 - G .* exp(-D * T)) ./ (1 - G) ))));
+      
+  
+</code></pre></div>
+
+<p></details>
+</p></p>
+
+<h3 id="toc_9"><div id="BB3"> Variance Gamma Model </div></h3>
+
+<p>The Variance Gamma model is obtained by evaluating a Black-Scholes style Geometric Brownian Motion at a random time change given by a gamma process with the purpose to control the skewness and kurtosis of the return distribution. (Madan et al. 1998) This creates an inifinite jump diffusion process to describe asset returns.</p>
+
+<p>The characteristic function of the log stock price of the Variance Gamma model can be written as:</p>
+
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{VG}&space;&&space;=&space;\frac{&space;exp\left(&space;\mu&space;&plus;&space;w_c&space;\right)^{i&space;\omega&space;}&space;}{&space;\left(&space;1&space;-&space;i&space;\theta&space;v&space;&plus;&space;0.5&space;u_0&space;v&space;\omega^2&space;\right)&space;}&space;\notag&space;\\&space;where&space;\&space;\&space;w_c&space;&&space;=&space;\frac{1}{v}&space;*&space;ln(1-&space;i&space;\theta&space;*&space;v&space;-0.5&space;u_0&space;v)&space;\notag&space;\end{align}" title="\begin{align} \varphi_{VG} & = \frac{ exp\left( \mu + w_c \right)^{i \omega } }{ \left( 1 - i \theta v + 0.5 u_0 v \omega^2 \right) } \notag \\ where \ \ w_c & = \frac{1}{v} * ln(1- i \theta * v -0.5 u_0 v) \notag \end{align}" /></p>
+
+<p>where <img src="https://latex.codecogs.com/gif.latex?\inline&space;w_c" title="w_c" /> is a drift correction term and <img src="https://latex.codecogs.com/gif.latex?\inline&space;\theta" title="\theta" /> is an additional drift term which is set to -0.1436 following an estimation of Madan et al. (1998). <img src="https://latex.codecogs.com/gif.latex?\inline&space;v" title="v" /> is the variance rate of the gamma process and is set to 0.0403 following Carr et al. (2002).</p>
+
+<p><details><summary>Click to see Matlab code</summary>
+<p></p>
+
+<div><pre><code class="language-Matlab">function phi_vg = vg_char_fn(u_0, theta, a, b, k, T, v, S0, mu)
+
+%{
+ This code computes the Characteristic Function for the Variance Gamma Process. 
+ Notation follows Madan, Carr and Chang (1998), eq. 7, p. 8. 
+ theta&#39;s average value in Madan, Carr, Chang (1998) is -0.1436, 
+ theta = 0 gives the symmetric variance gamma,
+ theta &lt; 0 incorporates negatively skewness in the model.
+ 
+ Source: A.Itkin ”Pricing options with VG model using FFT”. 
+                   The Variance Gamma and Related Financial Models. August 9, 2007 – p. 7
+
+ Authors : Baldi Lanfranchi, Federico
+         : La Cour, Peter
+
+ Version : 1.0 (21.03.2019)
+         : 2.0 (23.03.2019) Added internal computation of omegas
+
+ phi_vg = vg_char_fn(u_0, v, theta, a, b, k, T)
+
+
+ Inputs : u_0           - variance
+        : theta         - drift term
+        : T             - time to maturity
+        : omega         - argument of the characteristic function
+        : v             - variance rate
+        : a             - Cosine argument (lower truncation bound) 
+        : b             - Cosine argument (upper truncation bound)
+        : k             - Vector of N evaluation intervals
+
+
+Outputs : phi_vg        - characteristic function values [0:N-1] vector
+
+%}
+
+% Vector of N evaluation arguments for the characteristic function
+omega   = k .* pi / (b - a);
+
+w = ( 1 / v ) * log(1 - theta * v - 0.5 * u_0 * v );
+
+phi_vg = exp( 1i * omega .* ( log( S0 ) + ( mu + w ) * T ) ) ./ ( 1 - 1i * theta * v * omega + ( u_0 * v / 2 ) * omega.^2 ).^(T/v) ;
+
+
+</code></pre></div>
+
+<p></details>
+</p></p>
+
+<h3 id="toc_10"><div id="BB4"> CGMY Model </div></h3>
+
+<p>The CGMY model can be seen as an extension to the Variance Gamma model allowing for both allows for both diffusions and for jumps of both finite and infinite activity. (Carr et al., 2002) </p>
+
+<p>The characteristic function of the CGMY model can be written as:</p>
+
+<p><img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{CGMY}&space;&&space;=&space;exp\left(&space;i&space;\omega&space;\mu&space;T&space;-&space;0.5&space;\omega^2&space;u_0&space;T&space;\right)&space;\cdot&space;exp\left(&space;T&space;C&space;\Gamma(-Y)\left[&space;(M&space;-&space;i&space;\omega&space;)^Y&space;-M^Y&space;&plus;&space;(G&plus;i&space;\omega)^Y&space;-&space;G^Y&space;\right]&space;\right&space;)&space;\notag&space;\end{align}" title="\begin{align} \varphi_{CGMY} & = exp\left( i \omega \mu T - 0.5 \omega^2 \sigma^2 T \right) \cdot exp\left( T C \Gamma(-Y)\left[ (M - i \omega )^Y -M^Y + (G+i \omega)^Y - G^Y \right] \right ) \notag \end{align}" /></p>
+
+<p>where C can be described as a measure of the overall level of activity of the process, G controls the exponential decay on the right of the process and M controls the exponential decay on the left. For example, if G &lt; M, the left tail of the distribution would be heavier
+than the right tail. The parameter Y is used to model additional characteristics of the process and a description of it can be found in Carr et al. (2002) or in Vershik and Yor (1995).</p>
+
+<p>For the purpose of this project the parameters C, G, M and Y were chosen according to Carr et al. (2002) with values of 24.79, 94.45, 95.79 and 0.2495 respectively.</p>
+
+<p><details><summary>Click to see Matlab code</summary>
+<p></p>
+
+<div><pre><code class="language-Matlab">function phi_cgmy = cgmy_char_fn(mu, u_0, C, G, Y, M, a, b, k, T)
+
+%{
+
+ This code computes the Characteristic Function for the Finite Moment Log
+ Stable Levy Process. Notation follows Carr and Wu (2003), eq. 32, p. 8
+
+ Authors : Baldi Lanfranchi, Federico
+         : La Cour, Peter
+
+ Version : 1.0 (22.03.2019)
+         : 2.0 (23.03.2019) Added internal computation of omegas
+
+ phi_cgmy = cgmy_char_fn(mu, u_0, C, G, Y, M, a, b, k, T)
+
+
+ Inputs : mu            - r - q
+        : T             - time to maturity
+        : omega         - argument of the characteristic function
+        : C             - Carr Parameter
+        : G             - Geman Parameter
+        : M             - Madan Parameter
+        : Y             - Yor Parameter
+        : u_0           - variance
+
+Outputs : phi_cgmy      - characteristic function values [0:N-1] vector
+
+%}
+
+
+% Vector of N evaluation arguments for the characteristic function
+omega   = k .* pi / (b - a);
+
+
+% Characteristic function
+phi_cgmy = exp( 1i * omega * ( mu ) * T - 0.5 * omega.^2 * u_0 * T) .* ...
+           exp( T * C * gamma( -Y ) * ( (M - 1i * omega).^Y - M^Y + (G + 1i * omega).^Y - G^Y ) );
+</code></pre></div>
+
+<p></details>
+</p></p>
+
+<div align="right"><a href="#0">Back to top</a> </div>
+
+<h2 id="toc_11"><div id="C2"> <a href="#0">Distributional Characteristics of the different Models</a> </div></h2>
+
+<p>The Figure below shows the distributional characteristics of the models considered in this project compared to a normal distribution. The distributions were obtained using the cosine expansion of the Fourier integral of the given characteristic function with the assumed parameters.</p>
+
+<p>Unsurprisingly, the fit of the Black-Scholes model is very close to the normal distribution as the distribution of the assumed underlying process is normal. For the Heston model the distribution has a higher kurtosis and negative skewness such that the left tail is fatter compared to a normal. </p>
+
+<p>Furthermore, the distribution of the assumed Variance Gamma model is close to normal (with a potential slight negative skew). This is mainly due to the choice of v and theta. Firstly, theta, the parameter controlling the skewness is chosen to be relatively small with -0.1436. Secondly, v, the parameter controlling the kurtosis, is chosen to be close to zero with 0.0403 and the Variance Gamma model approaches a geometric Brownian Motion as v approaches zero. (Daal and Madan, 2005)</p>
+
+<p>Lastly, the CGMY distribution with the given parameters has a lower kurtosis and slight positive skew compared to the normal so that there is more probability mass in the tails of the distribution. The slight negative skew is due to M (95.79) being chosen to be larger than G (94.45) so that the left tail of the distribution is slightly heavier than the right tail. The kurtosis could be controlled via the parameter C which was chosen to be 24.79 following Carr et al. (2002).</p>
+
+<p><img src="Plots/DistributionPlots.png"
+     alt="Call Option Plots"
+     style="float: left; margin-right: 10px; padding-bottom: 30px;" /></p>
+
+<div align="right"><a href="#0">Back to top</a> </div>
+
+<h2 id="toc_12"><div id="D2"> <a href="#0">Option Pricing with the Cos-FFT Method</a> </div></h2>
+
+<p>The figure below compares the call prices calculated using the Cos-FFT method compared to the analytical Black-Scholes solutions for 66 SPX options of the same maturity with strikes ranging from 1275 to 3600. The time to maturity is 1.0056, i.e. approximately one year. The price of the underlying is 2800.7, the risk-free rate is assumed to be approximately 2.39% (the current 3-month T-bill rate) and the continuous dividend yield is assumed to be 1.92% taken from <a href="http://www.multpl.com/s-p-500-dividend-yield/table">http://www.multpl.com/s-p-500-dividend-yield/table</a>.</p>
+
+<p>From the figure it is clear that all four models have significant deviations from the call option price implied by the analytical Black-Scholes model. However, this says nothing about the accuracy of the pricing and it should not be expected to be precise pricing given that the parameters were chosen arbitrarily from previous authors. </p>
+
+<p>Still, the deviation from the analytical Black-Scholes from the Black-Scholes calculated using the COS-FFT-Method is somewhat surprising although in relative terms compared to the option price it is not large. Furthermore, the first three models approach a call option price of zero as the strike price increases as would be expected. The CGMY model, however, does not seem to converge as quickly and seems to have relatively large differences in pricing to other models. The most obvious reason for this could be that the CGMY takes the highest number of unknown parameters which induces this error. </p>
+
+<p>Despite the fact that the parameters could cause errors, we would also expect to have truncation errors in the pricing. The truncation bounds were calculated following Fang and Oosterlee (2008) using the cumulants of the four models and the recommended multiplication of 12 for the Heston model and 10 for the other three models. </p>
+
+<p>In addition to the truncation error, their is the possibility of the discretisation error having an influence on the pricing as well.</p>
+
+<p><img src="Plots/CallPlotsSPX.png"
+     alt="Call Option Plots"
+     style="float: left; margin-right: 10px; padding-bottom: 30px;" /></p>
+
+<div align="right"><a href="#0">Back to top</a> </div>
+
+<h2 id="toc_13"><div id="E2"> <a href="#0">Concluding Remarks</a> </div></h2>
+
+<div align="right"><a href="#0">Back to top</a> </div>
+
+<h2 id="toc_14"><div id="E2"> <a href="#0">References</a> </div></h2>
+
+<ul>
+<li>Carr, P., Geman, H., Madan, D. and Yor, M. (2002). The Fine Structure of Asset Returns: An Empirical Investigation. The Journal of Business, 75(2), pp.305-333. </li>
+<li>Carr, P. and Madan, D. (1999). Option valuation using the fast Fourier transform. The Journal of Computational Finance, 2(4), pp.61-73.</li>
+<li>Daal, E. and Madan, D. (2005). An Empirical Examination of the Variance‐Gamma Model for Foreign Currency Options. The Journal of Business, 78(6), pp.2121-2152.</li>
+<li>Fang, F. and Oosterlee, C. (2008). A Novel Pricing Method for European Options Based on Fourier-Cosine Series Expansions. SIAM Journal on Scientific Computing, 31(2), pp.826-848.</li>
+<li>Heston, S. (1993). A Closed-Form Solution for Options with Stochastic Volatility with Applications to Bond and Currency Options. Review of Financial Studies, 6(2), pp.327-343.</li>
+<li>Lee, R. W. (2004). Option Pricing by Transform Methods: Extensions, Unification, and Error Control, Journal of Computational Finance 7(3), 51–86.</li>
+<li>Lewis, A. (2001). A Simple Option Formula for General Jump-Diffusion and other Exponential Lévy Processes, Envision Financial Systems and OptionCity.net, California.</li>
+<li>Madan, D., Carr, P. and Chang, E. (1998). The Variance Gamma Process and Option Pricing. Review of Finance, 2(1), pp.79-105.</li>
+<li>Schmelzle, M. (2010). Option Pricing Formulae using Fourier Transform: Theory and Application.</li>
+</ul>
+
+<div align="right"><a href="#0">Back to top</a> </div>
+
+
+
+<script type="text/x-mathjax-config">
+(function () {
+
+MathJax.Hub.Config({
+	'showProcessingMessages': false,
+	'messageStyle': 'none'
+});
+
+if (typeof MathJaxListener !== 'undefined') {
+	MathJax.Hub.Register.StartupHook('End', function () {
+		MathJaxListener.invokeCallbackForKey_('End');
+	});
+}
+
+})();
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+</body>
+
+</html>
