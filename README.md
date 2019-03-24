@@ -49,17 +49,31 @@ University of St. Gallen, 24.03.2019
 
 ### <div id="BB1"> Black-Scholes Model </div>
 
+The Black-Scholes model is arguably the most famous option pricing model. The model assumes that the underlying asset process can be described by a Geometric Brownian Motion. One of the main assumptions of the model is that the logarithmic returns are normally distributed. The stochastic differential equation takes the form:
 
+<img src="https://latex.codecogs.com/gif.latex?\inline&space;\begin{align}&space;dS_t&space;=&space;S_t&space;\left(&space;\mu&space;dt&space;&plus;&space;\sqrt{u_0}&space;\&space;\&space;dW_t&space;\right)&space;\notag&space;\end{align}" title="\begin{align} dS_t = S_t \left( \mu dt + \sqrt{u_0} \ \ dW_t \right) \notag \end{align}" />
+
+where <img src="https://latex.codecogs.com/gif.latex?\inline&space;\mu" title="\mu" /> is the drift term and <img src="https://latex.codecogs.com/gif.latex?\inline&space;u_0" title="u_0" /> is the variance of the process.
+
+From this, by making a change of measure using the risk neutral probability and after some manipulations, one gets the characteristic function of the Black Scholes model which follows a normal distribution: 
+
+<img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{BS}&space;=&space;exp&space;\left(&space;(&space;\mu&space;-&space;0.5&space;u_0&space;)&space;i&space;T&space;\omega&space;-&space;0.5&space;u_0&space;T&space;\omega^2&space;\right&space;)&space;\notag&space;\end{align}" title="\begin{align} \varphi_{BS} = exp \left( ( \mu - 0.5 u_0 ) i T \omega - 0.5 u_0 T \omega^2 \right ) \notag \end{align}" />
 
 ### <div id="BB2"> Heston Model </div>
 
+The Heston Model incorporates a stochastic volatility term and can be described by this system of stochastic differential equations:
+
+<img src="https://latex.codecogs.com/gif.latex?\inline&space;\begin{align}&space;ds_t&space;&&space;=&space;(&space;\mu&space;-&space;0.5&space;u_t&space;)&space;dt&space;&plus;&space;\sqrt{u_t}&space;\&space;\&space;dW_{1t}&space;\notag&space;\\&space;du_t&space;&&space;=&space;\lambda&space;(&space;\bar{u}&space;-&space;u_t&space;)&space;dt&space;&plus;&space;\eta&space;\sqrt{u_t}&space;\&space;\&space;dW_{2t}&space;\notag&space;\end{align}" title="\begin{align} ds_t & = ( \mu - 0.5 u_t ) dt + \sqrt{u_t} \ \ dW_{1t} \notag \\ du_t & = \lambda ( \bar{u} - u_t ) dt + \eta \sqrt{u_t} \ \ dW_{2t} \notag \end{align}" />
+
+The characteristic function of the log strike price can be written as:
 
 <img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{hes}&space;&&space;=&space;exp\left(&space;i&space;\omega&space;\mu&space;T&space;&plus;&space;\frac{u_0}{\eta^2}&space;\left(&space;\frac{1-&space;e^{-DT}}{1-Ge^{-DT}}&space;\right)&space;(\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;)&space;\right)&space;\notag&space;\\&space;where&space;\&space;\&space;D&space;&&space;=&space;\sqrt{&space;(\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;)^2&space;&plus;&space;(&space;\omega^2&space;&plus;&space;i&space;\omega&space;)&space;\eta^2&space;}&space;\&space;\&space;and&space;\&space;\&space;G&space;=&space;\frac{\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;-&space;D&space;}{&space;\lambda&space;-&space;i&space;\rho&space;\eta&space;\omega&space;&plus;&space;D&space;}&space;\notag&space;\end{align}" title="\begin{align} \varphi_{hes} & = exp\left( i \omega \mu T + \frac{u_0}{\eta^2} \left( \frac{1- e^{-DT}}{1-Ge^{-DT}} \right) (\lambda - i \rho \eta \omega ) \right) \notag \\ where \ \ D & = \sqrt{ (\lambda - i \rho \eta \omega )^2 + ( \omega^2 + i \omega ) \eta^2 } \ \ and \ \ G = \frac{\lambda - i \rho \eta \omega - D }{ \lambda - i \rho \eta \omega + D } \notag \end{align}" />
 
+For more documentation on the Heston model see Heston (1993) and for information on the Heston model with the Cosine Method see Fang and Osterle (2008).
 
 ### <div id="BB3"> Variance Gamma Model </div>
 
-
+<img src="https://latex.codecogs.com/gif.latex?\begin{align}&space;\varphi_{VG}&space;&&space;=&space;\frac{&space;exp\left(&space;\mu&space;&plus;&space;w_c&space;\right)^{i&space;\omega&space;}&space;}{&space;\left(&space;1&space;-&space;i&space;\theta&space;v&space;&plus;&space;0.5&space;u_0&space;v&space;\omega^2&space;\right)&space;}&space;\notag&space;\\&space;where&space;\&space;\&space;w_c&space;&&space;=&space;\frac{1}{v}&space;*&space;ln(1-&space;i&space;\theta&space;*&space;v&space;-0.5&space;u_0&space;v)&space;\notag&space;\end{align}" title="\begin{align} \varphi_{VG} & = \frac{ exp\left( \mu + w_c \right)^{i \omega } }{ \left( 1 - i \theta v + 0.5 u_0 v \omega^2 \right) } \notag \\ where \ \ w_c & = \frac{1}{v} * ln(1- i \theta * v -0.5 u_0 v) \notag \end{align}" />
 
 
 

@@ -22,7 +22,7 @@ rho         = -0.5711;                          % Correlation between Wiener Pro
 
 % VG Parameters
 theta = -0.1436;
-v     = 0.0403 
+v     = 0.0403;
 
 
 % CGMY Parameters from CGMY (2003)
@@ -41,13 +41,13 @@ S0   = 100;                                     % Initial Underlying Price
 mu   = r - q;                                   % Price Drift Rate
 %}
 
+
 % Option / Underlying / Market Parameters
 S0   = parameters(1);                           % Initial Underlying Price
-r    = 0;                                       % Risk-free Rate
-q    = 0;                                       % Dividend Yield
+r    = parameters(2);                                       % Risk-free Rate
+q    = parameters(3);                                       % Dividend Yield
 T    = parameters(4);                           % Time to Maturity
 mu   = r - q;                                   % Price Drift Rate
-
 
 
 
@@ -55,26 +55,27 @@ mu   = r - q;                                   % Price Drift Rate
 
 % Heston cumulants and integration bounds
 [c1, c2, ~]     = heston_cumulants_v1(mu, lambda, u_bar, u_0, eta, rho, T);
-[a_hest, b_hest]= cos_truncation_range_v2(c1,c2,0,20);
+[a_hest, b_hest]= cos_truncation_range_v2(c1,c2,0,100);
 
 % CGMY cumulants and integration bounds
 [c1, c2, c4, ~] = cgmy_cumulants_v2( u_0, T, mu, C, G, M, Y);
-[a_cgmy, b_cgmy]= cos_truncation_range_v2(c1,c2,c4,10);
+[a_cgmy, b_cgmy]= cos_truncation_range_v2(c1,c2,c4,100);
 
 % VG cumulants and integration bounds
 [c1, c2, c4, ~] = variance_gamma_cumulants_v2( u_0, T, theta, mu, v );
-[a_vg, b_vg]    = cos_truncation_range_v2(c1,c2,c4,10);
+[a_vg, b_vg]    = cos_truncation_range_v2(c1,c2,c4,100);
 
 % BS cumulants and integration bounds
 [c1, c2, c4, ~] = bs_cumulants_v1(u_0, mu, T );
-[a_bs, b_bs]    = cos_truncation_range_v2(c1,c2,c4,10);
+[a_bs, b_bs]    = cos_truncation_range_v2(c1,c2,c4,100);
 
 
 %% COS - FFT Parameters
 
-N       = 10000;                 % Number of points to evaluate
+N       = 500;                 % Number of points to evaluate
 k       = 0:(N - 1);            % Vector of N evaluation intervals
 K       = strikes';             % Vector of M strike prices to evaluate
+% K       = 70:130;
 x       = log(S0 ./ K);         % Vector of M log prices
 
 
