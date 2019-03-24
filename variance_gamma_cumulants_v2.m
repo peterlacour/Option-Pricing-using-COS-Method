@@ -1,4 +1,4 @@
-function [c1, c2, c4, w] = variance_gamma_cumulants_v2( u_0, T, theta, mu )
+function [c1, c2, c4, w] = variance_gamma_cumulants_v2( u_0, T, theta, mu, v )
 
 %{
  This code computes up to the 2nd cumulant of ln(St/K) for the Variance Gamma Model
@@ -23,8 +23,6 @@ Outputs : c1            - first cumulant (mean)
         : omega         - drift correction term
 
 %}
-% variance rate set to 1 for now
-v = 1
 
 % First cumulant (mean)
 c1 = ( mu + theta ) * T;

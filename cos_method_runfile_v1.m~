@@ -60,7 +60,7 @@ x       = log(S0 ./ K);         % Vector of M log prices
 % Characteristic functions for the log stock price
 phi_hest     = heston_char_fn_v2(mu, lambda, u_bar, u_0, eta, rho, a_hest, b_hest, k, T);
 phi_cgmy     = cgmy_char_fn(mu, u_0, C, G, Y, M, a_cgmy, b_cgmy, k, T);
-phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T);
+phi_vg       = vg_char_fn(u_0, theta, a_vg, b_vg, k, T, mu);
 phi_bs       = bs_char_fn_v1(mu, u_0, a_bs, b_bs, k, T);
 
 
@@ -105,71 +105,55 @@ hold off;
 Npoints = 5000;
 N = 5000;                         % default value 25, try 100,500,5000
 
-
-% BS Plot
-figure
-MakePdfPlot2(phi_bs,a_bs,b_bs,k,mu,u_0,N,1, 'B-S Pdf');
-
-
 % Heston Plot
 % Heston truncation bounds
-MakePdfPlot2(phi_hest,a_hest,b_hest,k,mu,u_0,N,2, 'Heston Pdf');
+figure
+MakePdfPlot2(phi_hest,a_hest,b_hest,k,mu,u_0,N,1, 'Heston Pdf');
 
 
 % Variance Gamma Plot
-MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,3, 'Variance-Gamma Pdf');
+MakePdfPlot2(phi_vg,a_vg,b_vg,k,mu,u_0,N,2, 'Variance-Gamma Pdf');
 
 
 % CGMY Plot
 % CGMY - Parameters from CGMY ( 2003 )
-MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,4, 'CGMY Pdf');
-
+MakePdfPlot2(phi_cgmy,a_cgmy,b_cgmy,k,mu,u_0,N,3, 'CGMY Pdf');
 
 %{
 % Call Plots
-% BS
-subplot(2,4,1)
-plot(K,C_COS_bs,'r', 'DisplayName', 'BS'), grid on, hold on;
-plot(K,C_BS,'--k', 'DisplayName', 'True BS'),
-title('Black-Scholes Model')
-legend
-axis([70 130 0.0 32])
-subplot(2,4,5)
-plot(K,C_COS_bs-C_BS'), grid on, hold on;
-axis([70 130 -0.5 2.5])
 % Heston
-subplot(2,4,2)
+subplot(2,3,1)
 plot(K,C_COS_hest,'r', 'DisplayName', 'Heston'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'True BS'),
 title('Heston Model')
 legend
 axis([70 130 0.0 32])
-subplot(2,4,6)
+subplot(2,3,4)
 plot(K,C_COS_hest-C_BS'), grid on, hold on;
 axis([70 130 -0.5 2.5])
 % Variance Gamma
-subplot(2,4,3)
+subplot(2,3,2)
 plot(K,C_COS_vg,'r', 'DisplayName', 'VG'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
 title('Variance Gamma Model')
 legend
 axis([70 130 0.0 32])
-subplot(2,4,7)
+subplot(2,3,5)
 plot(K,C_COS_vg-C_BS'), grid on, hold on;
 axis([70 130 -0.5 2.5])
 % CGMY
-subplot(2,4,4)
+subplot(2,3,3)
 plot(K,C_COS_cgmy,'r', 'DisplayName', 'CGMY'), grid on, hold on;
 plot(K,C_BS,'--k', 'DisplayName', 'True BS'), 
 title('CGMY Model')
 legend
 axis([70 130 0.0 32])
-subplot(2,4,8)
+subplot(2,3,6)
 plot(K,C_COS_cgmy-C_BS'), grid on, hold off;
 axis([70 130 -0.5 2.5]);
-%}
 
-%{
+
+
 % Put Plots
 % Heston
 subplot(2,3,1)
@@ -224,7 +208,7 @@ for l=1:length(x)
     pdf(l)=sum(Fk.*cos (k*pi*(x(l)-a)/bma) );
 end
 
-subplot(2,4,plotpos)
+subplot(2,3,plotpos)
 hold on
 plot(x,pdf, 'DisplayName', name), grid on;
 title(name)
@@ -233,7 +217,7 @@ legend
 axis([-1.5 1.5 0 4.5])
 hold off
 
-subplot(2,4,plotpos+4)
+subplot(2,3,plotpos+3)
 plot(x,pdf(:)-true(:)), grid on;
 title(strcat(name, " - Normal Pdf"))
 axis([-1.5 1.5 -1.5 2.5])
